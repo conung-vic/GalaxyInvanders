@@ -1,6 +1,5 @@
 package com.conungvic.gigame.screens
 
-import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.Color
@@ -22,7 +21,7 @@ import com.conungvic.gigame.V_WIDTH
 class TitleScreen(game: GIGame) : Screen{
     private val viewport: Viewport
     private val stage: Stage
-    private val game: Game
+    private val game: GIGame
 
     init {
         this.game = game
@@ -37,8 +36,8 @@ class TitleScreen(game: GIGame) : Screen{
         table.center()
         table.setFillParent(true)
 
-        val gameOverLabel = Label("Game Over", font)
-        val playAgainLabel = Label("Click to play again", font)
+        val gameOverLabel = Label("Galaxy Invanders", font)
+        val playAgainLabel = Label("Click to play", font)
 
         table.add(gameOverLabel).expandX()
         table.row()
@@ -52,7 +51,13 @@ class TitleScreen(game: GIGame) : Screen{
         Gdx.app.log("TitleScreen:show","Not yet implemented")
     }
 
+    private fun update(delta: Float) {
+        this.game.assetManager.update()
+
+    }
+
     override fun render(delta: Float) {
+        update(delta)
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         stage.draw()
