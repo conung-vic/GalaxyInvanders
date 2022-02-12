@@ -1,45 +1,25 @@
 package com.conungvic.gigame.screens
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Screen
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
-import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.utils.viewport.Viewport
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_HEIGHT
 import com.conungvic.gigame.V_WIDTH
-import com.conungvic.gigame.utils.BACKGROUND_TEMPLATE
+import com.conungvic.gigame.utils.FontManager
 
-class TitleScreen(game: GIGame) : Screen{
-    private val viewport: Viewport
-    private val stage: Stage
-    private val game: GIGame
-    private var back: Texture? = null
-    private val backNum = MathUtils.random(1, 12)
+class TitleScreen(game: GIGame) : CommonScreen(game) {
 
     init {
-        this.game = game
-        viewport = FitViewport(V_WIDTH, V_HEIGHT, OrthographicCamera())
-        stage = Stage(viewport, game.batch)
+        val font32 = LabelStyle(FontManager.astra32, Color.WHITE)
+        val playAgainLabel = Label("Click to play", font32)
 
-        val texture = Texture(Gdx.files.internal("fonts/astro-32.png"))
-        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear)
-        val bFont = BitmapFont(Gdx.files.internal("fonts/astro-32.fnt"), TextureRegion(texture), false)
-        val font = LabelStyle(bFont, Color.WHITE)
+        val font45 = LabelStyle(FontManager.astra45, Color.WHITE)
+        val mainTitleLabel = Label("Galaxy Invanders", font45)
 
-        val playAgainLabel = Label("Click to play", font)
-        val mainTitleLabel = Label("Galaxy Invanders", font)
-
-        mainTitleLabel.setPosition(0f, 0f)
+        mainTitleLabel.setPosition(V_WIDTH / 2 - 100, V_HEIGHT / 2 + 50)
         playAgainLabel.setPosition(100f, 100f)
 
         stage.addActor(mainTitleLabel)
@@ -50,23 +30,21 @@ class TitleScreen(game: GIGame) : Screen{
         Gdx.app.log("TitleScreen:show","Not yet implemented")
     }
 
-    private fun update(delta: Float) {
-        this.game.assetManager.update()
+    private fun handleInput(delta: Float) {
+        if (Gdx.input.justTouched() || Gdx.input.isButtonJustPressed(Input.Keys.SPACE)) {
+            Gdx.app.log("TitleScreen", "New Game")
+            this.game.screen = GameScreen(this.game)
+            dispose()
+        }
+    }
 
-        if (this.game.assetManager.isFinished)
-            back = this.game.assetManager.get(BACKGROUND_TEMPLATE.format(backNum))
+    override fun update(delta: Float) {
+        super.update(delta)
+        handleInput(delta)
     }
 
     override fun render(delta: Float) {
-        update(delta)
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-
-        if (back != null) {
-            game.batch?.begin()
-            game.batch?.draw(back, 0f, 0f)
-            game.batch?.end()
-        }
+        super.render(delta)
 
         stage.act()
         stage.draw()
@@ -86,9 +64,5 @@ class TitleScreen(game: GIGame) : Screen{
 
     override fun hide() {
         Gdx.app.log("TitleScreen:hide","Not yet implemented")
-    }
-
-    override fun dispose() {
-        stage.dispose()
     }
 }
