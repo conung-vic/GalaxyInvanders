@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
+import com.badlogic.gdx.graphics.Texture
 
-const val AUDIO = "audio"
-const val MUSIC = "music"
-const val SOUNDS = "sounds"
+private const val AUDIO = "audio"
+private const val MUSIC = "music"
+private const val SOUNDS = "sounds"
+
 const val THEME_01 = "${AUDIO}/${MUSIC}/theme_01.mp3"
 const val THEME_02 = "${AUDIO}/${MUSIC}/theme_02.mp3"
 
@@ -18,6 +20,8 @@ const val EXPLOSION_1  = "${AUDIO}/${SOUNDS}/explosion_01.wav"
 const val EXPLOSION_2  = "${AUDIO}/${SOUNDS}/explosion_02.wav"
 const val PAUSE        = "${AUDIO}/${SOUNDS}/pause.wav"
 const val PLAYER_SHOOT = "${AUDIO}/${SOUNDS}/player_shoot.wav"
+
+const val BACKGROUND_TEMPLATE="backgrounds/back%02d.jpg"
 
 class GIAssetManager : AssetManager() {
 
@@ -36,6 +40,13 @@ class GIAssetManager : AssetManager() {
         this.load(EXPLOSION_2, Sound::class.java)
         this.load(PAUSE, Sound::class.java)
         this.load(PLAYER_SHOOT, Sound::class.java)
+    }
+
+    fun loadBackgrounds() {
+        (1..12)
+            .forEach {
+                this.load(BACKGROUND_TEMPLATE.format(it), Texture::class.java)
+            }
     }
 
     override fun update(): Boolean {
@@ -57,7 +68,7 @@ class GIAssetManager : AssetManager() {
                 theme.play()
             }
 
-            theme1.play()
+            // theme1.play()
         }
         return res
     }

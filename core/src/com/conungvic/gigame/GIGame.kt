@@ -5,13 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.conungvic.gigame.screens.TitleScreen
 import com.conungvic.gigame.utils.GIAssetManager
 
-const val V_WIDTH = 800f
-const val V_HEIGHT = 600f
+const val V_WIDTH = 850f
+const val V_HEIGHT = 500f
 const val PPM = 100f
-
-
-
-
 
 class GIGame : Game(){
     val assetManager: GIAssetManager = GIAssetManager()
@@ -21,6 +17,7 @@ class GIGame : Game(){
     override fun create() {
         batch = SpriteBatch()
 
+        assetManager.loadBackgrounds()
         assetManager.loadThemes()
         assetManager.loadSoundFx()
 
