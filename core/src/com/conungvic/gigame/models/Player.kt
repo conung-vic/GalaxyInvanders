@@ -7,6 +7,7 @@ enum class State {
 object Player {
     var life: Int = 3
     var weaponLevel: Int = 1
-    var weaponStrength: Int = 1
+    var weaponPower: Int = 1
+    var weaponSpeed: Float = 1.0f
     var state: State = State.LIVE
 }

@@ -16,7 +16,7 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
 
     override fun render(delta: Float) {
         super.render(delta)
-        hud?.stage?.draw()
+        hud?.render()
     }
 
     override fun show() {

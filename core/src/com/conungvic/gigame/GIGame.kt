@@ -5,8 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.conungvic.gigame.ui.screens.TitleScreen
 import com.conungvic.gigame.ui.utils.GIAssetManager
 
-const val V_WIDTH = 900f
-const val V_HEIGHT = 510f
+//const val V_WIDTH = 900f
+//const val V_HEIGHT = 510f
+
+const val V_WIDTH = 1600f
+const val V_HEIGHT = 900f
+
 const val PPM = 100f
 
 class GIGame : Game(){
