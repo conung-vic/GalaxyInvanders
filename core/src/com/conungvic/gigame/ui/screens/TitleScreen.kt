@@ -1,4 +1,4 @@
-package com.conungvic.gigame.screens
+package com.conungvic.gigame.ui.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_HEIGHT
 import com.conungvic.gigame.V_WIDTH
-import com.conungvic.gigame.utils.FontManager
+import com.conungvic.gigame.ui.utils.FontManager
 
 class TitleScreen(game: GIGame) : CommonScreen(game) {
 

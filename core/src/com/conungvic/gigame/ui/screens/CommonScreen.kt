@@ -1,4 +1,4 @@
-package com.conungvic.gigame.screens
+package com.conungvic.gigame.ui.screens
 
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -10,14 +10,15 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_HEIGHT
 import com.conungvic.gigame.V_WIDTH
-import com.conungvic.gigame.utils.BACKGROUND_TEMPLATE
+import com.conungvic.gigame.models.GameModel
+import com.conungvic.gigame.ui.utils.BACKGROUND_TEMPLATE
 
 abstract class CommonScreen(game: GIGame) : Screen {
     protected val viewport: Viewport
     protected val stage: Stage
     protected val game: GIGame
     protected var back: Texture? = null
-    protected val backNum = MathUtils.random(1, 12)
+    private val backNum = MathUtils.random(1, 12)
 
     init {
         this.game = game
@@ -28,8 +29,11 @@ abstract class CommonScreen(game: GIGame) : Screen {
     protected open fun update(delta: Float) {
         this.game.assetManager.update()
 
-        if (this.game.assetManager.isFinished)
-            back = this.game.assetManager.get(BACKGROUND_TEMPLATE.format(backNum))
+        GameModel.scores += 1
+
+        val backName = BACKGROUND_TEMPLATE.format(backNum)
+        if (this.game.assetManager.isLoaded(backName))
+            back = this.game.assetManager.get(backName)
     }
 
     override fun render(delta: Float) {
@@ -37,7 +41,7 @@ abstract class CommonScreen(game: GIGame) : Screen {
 
         if (back != null) {
             game.batch?.begin()
-            game.batch?.draw(back, 0f, 0f)
+            game.batch?.draw(back, 0f, 0f, V_WIDTH, V_HEIGHT)
             game.batch?.end()
         }
     }

@@ -1,4 +1,4 @@
-package com.conungvic.gigame.utils
+package com.conungvic.gigame.ui.utils
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture

@@ -1,9 +1,23 @@
-package com.conungvic.gigame.screens
+package com.conungvic.gigame.ui.screens
 
 import com.badlogic.gdx.Gdx
 import com.conungvic.gigame.GIGame
+import com.conungvic.gigame.ui.scenes.Hud
 
 class GameScreen(game: GIGame) : CommonScreen(game) {
+
+    private val hud = game.batch?.let { Hud(it) }
+
+    override fun update(delta: Float) {
+        hud?.update()
+        super.update(delta)
+
+    }
+
+    override fun render(delta: Float) {
+        super.render(delta)
+        hud?.stage?.draw()
+    }
 
     override fun show() {
         Gdx.app.log("GameScreen:show", "Not yet implemented")

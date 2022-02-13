@@ -2,11 +2,11 @@ package com.conungvic.gigame
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.conungvic.gigame.screens.TitleScreen
-import com.conungvic.gigame.utils.GIAssetManager
+import com.conungvic.gigame.ui.screens.TitleScreen
+import com.conungvic.gigame.ui.utils.GIAssetManager
 
-const val V_WIDTH = 850f
-const val V_HEIGHT = 500f
+const val V_WIDTH = 900f
+const val V_HEIGHT = 510f
 const val PPM = 100f
 
 class GIGame : Game(){

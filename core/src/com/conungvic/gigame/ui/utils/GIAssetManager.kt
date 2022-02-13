@@ -1,4 +1,4 @@
-package com.conungvic.gigame.utils
+package com.conungvic.gigame.ui.utils
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
@@ -10,18 +10,18 @@ private const val AUDIO = "audio"
 private const val MUSIC = "music"
 private const val SOUNDS = "sounds"
 
-const val THEME_01 = "${AUDIO}/${MUSIC}/theme_01.mp3"
-const val THEME_02 = "${AUDIO}/${MUSIC}/theme_02.mp3"
+const val THEME_01 = "$AUDIO/$MUSIC/theme_01.mp3"
+const val THEME_02 = "$AUDIO/$MUSIC/theme_02.mp3"
 
-const val ALIEN_HIT    = "${AUDIO}/${SOUNDS}/alien_hit.wav"
-const val ALIEN_SHOOT  = "${AUDIO}/${SOUNDS}/alien_shoot.wav"
-const val BONUS        = "${AUDIO}/${SOUNDS}/bonus.wav"
-const val EXPLOSION_1  = "${AUDIO}/${SOUNDS}/explosion_01.wav"
-const val EXPLOSION_2  = "${AUDIO}/${SOUNDS}/explosion_02.wav"
-const val PAUSE        = "${AUDIO}/${SOUNDS}/pause.wav"
-const val PLAYER_SHOOT = "${AUDIO}/${SOUNDS}/player_shoot.wav"
+const val ALIEN_HIT    = "$AUDIO/$SOUNDS/alien_hit.wav"
+const val ALIEN_SHOOT  = "$AUDIO/$SOUNDS/alien_shoot.wav"
+const val BONUS        = "$AUDIO/$SOUNDS/bonus.wav"
+const val EXPLOSION_1  = "$AUDIO/$SOUNDS/explosion_01.wav"
+const val EXPLOSION_2  = "$AUDIO/$SOUNDS/explosion_02.wav"
+const val PAUSE        = "$AUDIO/$SOUNDS/pause.wav"
+const val PLAYER_SHOOT = "$AUDIO/$SOUNDS/player_shoot.wav"
 
-const val BACKGROUND_TEMPLATE="backgrounds/back%02d.jpg"
+const val BACKGROUND_TEMPLATE = "backgrounds/back%02d.jpg"
 
 class GIAssetManager : AssetManager() {
 
@@ -68,7 +68,7 @@ class GIAssetManager : AssetManager() {
                 theme.play()
             }
 
-            // theme1.play()
+//            theme1.play()
         }
         return res
     }
