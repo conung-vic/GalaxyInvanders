@@ -31,7 +31,11 @@ class TitleScreen(game: GIGame) : CommonScreen(game) {
     }
 
     private fun handleInput(delta: Float) {
-        if (Gdx.input.justTouched() || Gdx.input.isButtonJustPressed(Input.Keys.SPACE)) {
+        if (
+            Gdx.input.justTouched() ||
+            Gdx.input.isKeyJustPressed(Input.Keys.SPACE) ||
+            Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
+        ) {
             Gdx.app.log("TitleScreen", "New Game")
             this.game.screen = GameScreen(this.game)
             dispose()

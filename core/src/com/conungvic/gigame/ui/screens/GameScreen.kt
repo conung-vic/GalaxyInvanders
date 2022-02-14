@@ -6,17 +6,17 @@ import com.conungvic.gigame.ui.scenes.Hud
 
 class GameScreen(game: GIGame) : CommonScreen(game) {
 
-    private val hud = game.batch?.let { Hud(it) }
+    private val hud = Hud(game)
 
     override fun update(delta: Float) {
-        hud?.update()
+        hud.update()
         super.update(delta)
 
     }
 
     override fun render(delta: Float) {
         super.render(delta)
-        hud?.render()
+        hud.render()
     }
 
     override fun show() {
