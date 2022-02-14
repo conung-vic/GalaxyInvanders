@@ -16,10 +16,10 @@ import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_HEIGHT
 import com.conungvic.gigame.V_WIDTH
 import com.conungvic.gigame.models.GameModel
-import com.conungvic.gigame.models.PlayerModel
+import com.conungvic.gigame.models.Player
 import com.conungvic.gigame.ui.utils.FontManager
 
-class Hud(game: GIGame): Disposable {
+class Hud(game: GIGame, player: Player): Disposable {
     private val debug = false
 
     private val game: GIGame
@@ -46,9 +46,12 @@ class Hud(game: GIGame): Disposable {
     private var labelStyle = Label.LabelStyle(FontManager.nasa32, Color.RED)
     private val playerImage: Sprite
 
+    private val player: Player
+
     init {
         this.game = game
-        this.batch = game.batch!!
+        this.batch = game.batch
+        this.player = player
         viewport = FitViewport(V_WIDTH, V_HEIGHT, OrthographicCamera())
         stage = Stage(viewport, batch)
 
@@ -131,8 +134,8 @@ class Hud(game: GIGame): Disposable {
     private fun drawLifeCounter() {
         val y = 867f
         this.batch.begin()
-        if (PlayerModel.life <= 5) {
-            for (i in 1.. PlayerModel.life) {
+        if (player.life <= 5) {
+            for (i in 1.. player.life) {
                 playerImage.setPosition(100f + 25 * i, y)
                 playerImage.draw(this.batch)
             }
@@ -160,12 +163,12 @@ class Hud(game: GIGame): Disposable {
 
     fun update() {
         scoreLabel.setText(String.format("%06d", GameModel.scores))
-        weaponLevelLabel.setText(String.format("Rocket lvl: %d", PlayerModel.weaponLevel))
-        weaponPowerLabel.setText(String.format("WP: %d", PlayerModel.weaponPower))
-        weaponSpeedLabel.setText(String.format("WS: %.1f", PlayerModel.weaponSpeed))
+        weaponLevelLabel.setText(String.format("Rocket lvl: %d", player.weaponLevel))
+        weaponPowerLabel.setText(String.format("WP: %d", player.weaponPower))
+        weaponSpeedLabel.setText(String.format("WS: %.1f", player.weaponSpeed))
 
-        lifeCounterLabel.isVisible = PlayerModel.life > 5
-        lifeCounterLabel.setText(String.format("x %d", PlayerModel.life))
+        lifeCounterLabel.isVisible = player.life > 5
+        lifeCounterLabel.setText(String.format("x %d", player.life))
 
         levelNumLabel.setText(String.format("%d", GameModel.currentLevel))
     }

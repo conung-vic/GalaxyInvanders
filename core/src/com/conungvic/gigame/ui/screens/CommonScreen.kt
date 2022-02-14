@@ -2,6 +2,7 @@ package com.conungvic.gigame.ui.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.MathUtils
@@ -12,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_HEIGHT
 import com.conungvic.gigame.V_WIDTH
-import com.conungvic.gigame.models.GameModel
 import com.conungvic.gigame.ui.utils.BACKGROUND_TEMPLATE
 
 abstract class CommonScreen(game: GIGame) : Screen {
@@ -34,7 +34,7 @@ abstract class CommonScreen(game: GIGame) : Screen {
         if (!this.game.assetManager.isFinished)
             this.game.assetManager.update()
 
-        val fps = Gdx.graphics.framesPerSecond;
+        val fps = Gdx.graphics.framesPerSecond
         val timeStep = if (fps > 60) 1f / fps else 1 / 60f
         this.game.world.step(timeStep, 6, 2)
 
@@ -45,11 +45,13 @@ abstract class CommonScreen(game: GIGame) : Screen {
 
     override fun render(delta: Float) {
         update(delta)
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         if (back != null) {
-            game.batch?.begin()
-            game.batch?.draw(back, 0f, 0f, V_WIDTH, V_HEIGHT)
-            game.batch?.end()
+            game.batch.begin()
+            game.batch.draw(back, 0f, 0f, V_WIDTH, V_HEIGHT)
+            game.batch.end()
         }
     }
 

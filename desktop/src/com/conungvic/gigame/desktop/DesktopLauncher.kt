@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
     config.height = V_HEIGHT.toInt()
     config.title = "Galactic Invaders"
     config.vSyncEnabled = false
-    config.foregroundFPS = 0
-    config.backgroundFPS = 0
+    config.foregroundFPS = 120
+    config.backgroundFPS = 120
     LwjglApplication(GIGame(), config)
 }
