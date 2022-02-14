@@ -1,9 +1,11 @@
 package com.conungvic.gigame.ui.screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
@@ -18,18 +20,23 @@ abstract class CommonScreen(game: GIGame) : Screen {
     protected val stage: Stage
     protected val game: GIGame
     protected var back: Texture? = null
-    private val backNum = MathUtils.random(1, 12)
+    private val backNum: Int = MathUtils.random(1, 12)
+    protected val b2dr: Box2DDebugRenderer = Box2DDebugRenderer()
+    protected val camera: OrthographicCamera = OrthographicCamera()
 
     init {
         this.game = game
-        viewport = FitViewport(V_WIDTH, V_HEIGHT, OrthographicCamera())
+        viewport = FitViewport(V_WIDTH, V_HEIGHT, camera)
         stage = Stage(viewport, game.batch)
     }
 
     protected open fun update(delta: Float) {
-        this.game.assetManager.update()
+        if (!this.game.assetManager.isFinished)
+            this.game.assetManager.update()
 
-        GameModel.scores += 1
+        val fps = Gdx.graphics.framesPerSecond;
+        val timeStep = if (fps > 60) 1f / fps else 1 / 60f
+        this.game.world.step(timeStep, 6, 2)
 
         val backName = BACKGROUND_TEMPLATE.format(backNum)
         if (this.game.assetManager.isLoaded(backName))
@@ -47,6 +54,7 @@ abstract class CommonScreen(game: GIGame) : Screen {
     }
 
     override fun dispose() {
+        b2dr.dispose()
         stage.dispose()
     }
 }

@@ -124,6 +124,7 @@ class Hud(game: GIGame): Disposable {
 
         shapeRenderer.color = fgColor
         shapeRenderer.set(ShapeRenderer.ShapeType.Line)
+        shapeRenderer.rect(10f, 10f, V_WIDTH - 20, V_HEIGHT - 80)
         shapeRenderer.end()
     }
 

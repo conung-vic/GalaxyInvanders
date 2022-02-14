@@ -68,7 +68,7 @@ class GIAssetManager : AssetManager() {
                 theme.play()
             }
 
-//            theme1.play()
+            theme1.play()
         }
         return res
     }
