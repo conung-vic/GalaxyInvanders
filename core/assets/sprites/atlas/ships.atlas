@@ -1,47 +1,167 @@
+
 ships.png
-size:512,128
-repeat:none
-alien_1_1
-bounds:79,7,28,31
-alien_1_2
-bounds:49,7,28,31
-alien_1_3
-bounds:109,7,28,31
-alien_2_1
-bounds:205,45,22,29
-alien_2_2
-bounds:181,38,22,29
-alien_2_3
-bounds:229,45,22,29
-alien_3_1
-bounds:85,40,30,27
-alien_3_2
-bounds:53,40,30,27
-alien_3_3
-bounds:117,40,30,27
-alien_4_1
-bounds:438,85,30,39
-alien_4_2
-bounds:149,28,30,39
-alien_4_3
-bounds:470,85,30,39
-alien_5_1
-bounds:297,88,45,36
-alien_5_2
-bounds:391,88,45,36
-alien_5_3
-bounds:344,88,45,36
-alien_6_1
-bounds:2,2,45,48
-alien_6_2
-bounds:250,76,45,48
-alien_6_3
-bounds:203,76,45,48
-alien_7_1
-bounds:53,69,48,55
-alien_7_2
-bounds:153,69,48,55
-alien_7_3
-bounds:103,69,48,55
+size: 512, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+alien_1
+  rotate: false
+  xy: 49, 7
+  size: 28, 31
+  orig: 28, 31
+  offset: 0, 0
+  index: 2
+alien_1
+  rotate: false
+  xy: 79, 7
+  size: 28, 31
+  orig: 28, 31
+  offset: 0, 0
+  index: 1
+alien_1
+  rotate: false
+  xy: 109, 7
+  size: 28, 31
+  orig: 28, 31
+  offset: 0, 0
+  index: 3
+alien_2
+  rotate: false
+  xy: 181, 38
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: 2
+alien_2
+  rotate: false
+  xy: 205, 45
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: 1
+alien_2
+  rotate: false
+  xy: 229, 45
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: 3
+alien_3
+  rotate: false
+  xy: 53, 40
+  size: 30, 27
+  orig: 30, 27
+  offset: 0, 0
+  index: 2
+alien_3
+  rotate: false
+  xy: 85, 40
+  size: 30, 27
+  orig: 30, 27
+  offset: 0, 0
+  index: 1
+alien_3
+  rotate: false
+  xy: 117, 40
+  size: 30, 27
+  orig: 30, 27
+  offset: 0, 0
+  index: 3
+alien_4
+  rotate: false
+  xy: 438, 85
+  size: 30, 39
+  orig: 30, 39
+  offset: 0, 0
+  index: 1
+alien_4
+  rotate: false
+  xy: 470, 85
+  size: 30, 39
+  orig: 30, 39
+  offset: 0, 0
+  index: 3
+alien_4
+  rotate: false
+  xy: 149, 28
+  size: 30, 39
+  orig: 30, 39
+  offset: 0, 0
+  index: 2
+alien_5
+  rotate: false
+  xy: 297, 88
+  size: 45, 36
+  orig: 45, 36
+  offset: 0, 0
+  index: 1
+alien_5
+  rotate: false
+  xy: 344, 88
+  size: 45, 36
+  orig: 45, 36
+  offset: 0, 0
+  index: 3
+alien_5
+  rotate: false
+  xy: 391, 88
+  size: 45, 36
+  orig: 45, 36
+  offset: 0, 0
+  index: 2
+alien_6
+  rotate: false
+  xy: 2, 2
+  size: 45, 48
+  orig: 45, 48
+  offset: 0, 0
+  index: 1
+alien_6
+  rotate: false
+  xy: 203, 76
+  size: 45, 48
+  orig: 45, 48
+  offset: 0, 0
+  index: 3
+alien_6
+  rotate: false
+  xy: 250, 76
+  size: 45, 48
+  orig: 45, 48
+  offset: 0, 0
+  index: 2
+alien_7
+  rotate: false
+  xy: 53, 69
+  size: 48, 55
+  orig: 48, 55
+  offset: 0, 0
+  index: 1
+alien_7
+  rotate: false
+  xy: 103, 69
+  size: 48, 55
+  orig: 48, 55
+  offset: 0, 0
+  index: 3
+alien_7
+  rotate: false
+  xy: 153, 69
+  size: 48, 55
+  orig: 48, 55
+  offset: 0, 0
+  index: 2
+bullet
+  rotate: false
+  xy: 502, 113
+  size: 6, 11
+  orig: 6, 11
+  offset: 0, 0
+  index: -1
 player
-bounds:2,52,49,72
+  rotate: false
+  xy: 2, 52
+  size: 49, 72
+  orig: 49, 72
+  offset: 0, 0
+  index: -1

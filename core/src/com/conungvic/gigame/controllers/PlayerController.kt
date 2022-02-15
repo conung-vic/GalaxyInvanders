@@ -43,7 +43,7 @@ class PlayerController(
             val bullet = it.next()
             if (bullet.waitForDestroy) {
                 it.remove()
-                game.world.destroyBody(bullet.body)
+                bullet.destroy()
             }
         }
     }

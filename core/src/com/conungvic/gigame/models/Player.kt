@@ -17,8 +17,6 @@ class Player(game: GIGame) {
     private val game: GIGame
     lateinit var body: Body
 
-    private val bulletFixDef: FixtureDef
-
     var life: Int = 5
     var weaponLevel: Int = 2
     var weaponPower: Int = 2
@@ -29,19 +27,6 @@ class Player(game: GIGame) {
     init {
         this.game = game
         definePlayer()
-
-        bulletFixDef = FixtureDef()
-        bulletFixDef.filter.categoryBits = PLAYER_BULLET_BIT
-        bulletFixDef.filter.maskBits = WALL_BIT
-        val bulletShape = PolygonShape()
-        val vertices = arrayOf(
-            Vector2(-1f, 2f),
-            Vector2(-1f, -2f),
-            Vector2(1f, 2f),
-            Vector2(1f, -2f)
-        )
-        bulletShape.set(vertices)
-        bulletFixDef.shape = bulletShape
     }
 
     private fun definePlayer() {
@@ -66,13 +51,7 @@ class Player(game: GIGame) {
     }
 
     private fun createBullet() {
-        val bDef = BodyDef()
-        bDef.type = BodyDef.BodyType.DynamicBody
-        bDef.position.set(body.position.x, body.position.y + 50)
-        val bulletBody = game.world.createBody(bDef)
-        bulletBody.setLinearVelocity(0f, 220f)
-        val bullet = Bullet(bulletBody)
-        bulletBody.createFixture(bulletFixDef).userData = bullet
+        val bullet = Bullet(game, this)
         bullets.add(bullet)
     }
 

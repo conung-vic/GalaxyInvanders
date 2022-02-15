@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.physics.box2d.Body
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_WIDTH
 import com.conungvic.gigame.controllers.PlayerController
@@ -17,12 +18,14 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
 
     private val player = Player(game)
     private val playerImage: Sprite
+    private val bulletImage: Sprite
     private val hud = Hud(game, player)
     private val playerController = PlayerController(game, player)
     private val shapeRenderer: ShapeRenderer
 
     init {
         playerImage = Sprite(TextureRegion(game.atlas.findRegion("player")))
+        bulletImage = Sprite(TextureRegion(game.atlas.findRegion("bullet")))
         shapeRenderer = ShapeRenderer()
         shapeRenderer.projectionMatrix = game.batch.projectionMatrix
         shapeRenderer.setAutoShapeType(true)    }
@@ -37,16 +40,11 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     override fun render(delta: Float) {
         super.render(delta)
 
-        shapeRenderer.begin()
+        game.batch.begin()
+        drawImage(playerImage, player.body)
         for (bullet in player.bullets) {
             drawBullet(bullet)
         }
-        shapeRenderer.end()
-
-        game.batch.begin()
-        val x: Float = (player.body.position?.x ?: (V_WIDTH / 2)) - playerImage.width / 2
-        val y: Float = (player.body.position?.y ?: 60f) - playerImage.height / 2
-        game.batch.draw(playerImage, x, y)
         game.batch.end()
 
 //        b2dr.render(game.world, camera.combined)
@@ -54,7 +52,13 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     }
 
     private fun drawBullet(bullet: Bullet) {
-        shapeRenderer.rect(bullet.body.position.x, bullet.body.position.y, 4f, 10f)
+        drawImage(bulletImage, bullet.body)
+    }
+
+    private fun drawImage(image: Sprite, body: Body) {
+        val x: Float = (body.position?.x ?: (V_WIDTH / 2)) - image.width / 2
+        val y: Float = (body.position?.y ?: 60f) - image.height / 2
+        game.batch.draw(image, x, y)
     }
 
     override fun show() {
