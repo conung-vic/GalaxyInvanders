@@ -9,7 +9,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.FixtureDef
 import com.badlogic.gdx.physics.box2d.PolygonShape
 import com.badlogic.gdx.physics.box2d.World
-import com.conungvic.gigame.controllers.WorldCollisionController
+import com.conungvic.gigame.controllers.*
+import com.conungvic.gigame.models.Enemy
+import com.conungvic.gigame.models.Player
 import com.conungvic.gigame.ui.screens.TitleScreen
 import com.conungvic.gigame.ui.utils.GIAssetManager
 import kotlin.experimental.or
@@ -20,6 +22,7 @@ const val V_HEIGHT = 900f
 const val WALL_BIT: Short = 1
 const val PLAYER_BIT: Short = 2
 const val PLAYER_BULLET_BIT: Short = 4
+const val ENEMY_BIT: Short = 16
 
 class GIGame : Game(){
     lateinit var batch: SpriteBatch
@@ -28,8 +31,19 @@ class GIGame : Game(){
     var atlas: TextureAtlas = TextureAtlas()
     var world: World = World(Vector2(0f, 0f), true)
 
+    val player: Player = Player(this)
+    val enemies: MutableList<Enemy> = mutableListOf()
+
+    val playerController = PlayerController(this)
+    val enemyController = EnemyController(this)
+    val levelController = LevelController(this)
+
     init {
         world.setContactListener(WorldCollisionController())
+        initEnemyVertices()
+        for (i in 0..6)
+            for (j in 0 .. 20)
+                enemies.add(enemyController.createEnemy(i, 100f + j * 60, 300f + i * 70))
     }
 
     override fun create() {

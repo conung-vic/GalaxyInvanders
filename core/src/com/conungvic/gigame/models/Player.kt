@@ -8,14 +8,19 @@ import com.badlogic.gdx.physics.box2d.FixtureDef
 import com.badlogic.gdx.physics.box2d.PolygonShape
 import com.conungvic.gigame.*
 import com.conungvic.gigame.ui.utils.PLAYER_SHOOT
+import kotlin.experimental.or
 
 enum class State {
     LIVE, DEAD, INVULNERABLE
 }
 
-class Player(game: GIGame) {
+class Player(game: GIGame): Destroyable {
     private val game: GIGame
     lateinit var body: Body
+
+    private var waitForDestroy = false
+    override fun setWaitForDestroy(value: Boolean) { waitForDestroy = value }
+    override fun isWaitForDestroy(): Boolean = waitForDestroy
 
     var life: Int = 5
     var weaponLevel: Int = 2
@@ -37,7 +42,7 @@ class Player(game: GIGame) {
         body = game.world.createBody(bDef)
         val fDef = FixtureDef()
         fDef.filter.categoryBits = PLAYER_BIT
-        fDef.filter.maskBits = WALL_BIT
+        fDef.filter.maskBits = WALL_BIT or ENEMY_BIT
         val playerShape = PolygonShape()
         val vertices = arrayOf(
             Vector2(0f, -36f),
@@ -51,7 +56,7 @@ class Player(game: GIGame) {
     }
 
     private fun createBullet() {
-        val bullet = Bullet(game, this)
+        val bullet = Bullet(game, body.position.x, body.position.y+50)
         bullets.add(bullet)
     }
 
@@ -61,5 +66,9 @@ class Player(game: GIGame) {
             playerShootSound.play()
             createBullet()
         }
+    }
+
+    override fun destroy() {
+        game.world.destroyBody(body)
     }
 }

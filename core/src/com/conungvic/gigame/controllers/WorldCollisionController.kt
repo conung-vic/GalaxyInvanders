@@ -2,6 +2,7 @@ package com.conungvic.gigame.controllers
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.physics.box2d.*
+import com.conungvic.gigame.ENEMY_BIT
 import com.conungvic.gigame.PLAYER_BIT
 import com.conungvic.gigame.PLAYER_BULLET_BIT
 import com.conungvic.gigame.WALL_BIT
@@ -34,6 +35,9 @@ class WorldCollisionController(
             PLAYER_BULLET_BIT or PLAYER_BIT -> {
                 Gdx.app.log("WorldCollisionController", "player bullet and player")
             }
+            PLAYER_BULLET_BIT or ENEMY_BIT -> {
+                Gdx.app.log("WorldCollisionController", "player bullet and enemy")
+            }
             else -> {
                 Gdx.app.log("WorldCollisionController", "Unknown collision")
             }
@@ -42,7 +46,7 @@ class WorldCollisionController(
 
     private fun markBulletForDestroy(fix: Fixture?) {
         val bullet: Bullet? = fix?.userData as Bullet?
-        bullet?.waitForDestroy = true
+        bullet?.setWaitForDestroy(true)
     }
 
     override fun endContact(contact: Contact?) {

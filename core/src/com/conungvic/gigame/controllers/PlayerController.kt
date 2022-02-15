@@ -4,17 +4,15 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import com.conungvic.gigame.GIGame
-import com.conungvic.gigame.models.Player
 import kotlin.math.absoluteValue
 
 class PlayerController(
-    private val game: GIGame,
-    private val player: Player
+    private val game: GIGame
     ) {
 
     fun handleInput() {
-        var xVel = player.body.linearVelocity.x
-        val yVel = player.body.linearVelocity.y
+        var xVel = game.player.body.linearVelocity.x
+        val yVel = game.player.body.linearVelocity.y
 
         if (
             Gdx.input.isKeyPressed(Input.Keys.LEFT) &&
@@ -27,21 +25,21 @@ class PlayerController(
         ) {
             xVel += 10
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            player.shoot()
+            game.player.shoot()
         } else {
             if (xVel.absoluteValue <= 7f) xVel = 0f
             else if (xVel > 0f) xVel -= 5
             else xVel += 5
         }
 
-        player.body.linearVelocity = Vector2(xVel, yVel)
+        game.player.body.linearVelocity = Vector2(xVel, yVel)
     }
 
     fun processObjects() {
-        val it = player.bullets.iterator()
+        val it = game.player.bullets.iterator()
         while (it.hasNext()) {
             val bullet = it.next()
-            if (bullet.waitForDestroy) {
+            if (bullet.isWaitForDestroy()) {
                 it.remove()
                 bullet.destroy()
             }
