@@ -2,17 +2,15 @@ package com.conungvic.gigame.controllers
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.physics.box2d.*
-import com.conungvic.gigame.ENEMY_BIT
-import com.conungvic.gigame.PLAYER_BIT
-import com.conungvic.gigame.PLAYER_BULLET_BIT
-import com.conungvic.gigame.WALL_BIT
+import com.conungvic.gigame.*
 import com.conungvic.gigame.models.Bullet
+import com.conungvic.gigame.models.Enemy
 import kotlin.experimental.or
 
 private const val s = "Not yet implemented"
 
 class WorldCollisionController(
-//    val game: GIGame
+    val game: GIGame
 ) : ContactListener {
 
     override fun beginContact(contact: Contact?) {
@@ -36,7 +34,13 @@ class WorldCollisionController(
                 Gdx.app.log("WorldCollisionController", "player bullet and player")
             }
             PLAYER_BULLET_BIT or ENEMY_BIT -> {
-                Gdx.app.log("WorldCollisionController", "player bullet and enemy")
+                if (cDefA == PLAYER_BULLET_BIT) {
+                    markBulletForDestroy(fixA)
+                    game.enemyController.hit((fixB?.userData as Enemy))
+                } else {
+                    markBulletForDestroy(fixB)
+                    game.enemyController.hit((fixA?.userData as Enemy))
+                }
             }
             else -> {
                 Gdx.app.log("WorldCollisionController", "Unknown collision")

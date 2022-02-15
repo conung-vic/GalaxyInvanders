@@ -42,6 +42,7 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
         hud.update()
         super.update(delta)
         game.playerController.processObjects()
+        game.enemyController.processObjects()
         game.playerController.handleInput()
     }
 
@@ -64,7 +65,7 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     }
 
     private fun drawEnemy(enemy: Enemy) {
-        val image = enemyImages[enemy.type][enemy.skin]
+        val image = enemyImages[enemy.level % 7][enemy.skin]
         drawImage(image, enemy.body)
     }
 

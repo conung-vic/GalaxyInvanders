@@ -8,14 +8,14 @@ import com.conungvic.gigame.ENEMY_BIT
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.PLAYER_BIT
 import com.conungvic.gigame.PLAYER_BULLET_BIT
-import com.conungvic.gigame.controllers.enemyBody
+import com.conungvic.gigame.controllers.enemyBodyVertices
 import kotlin.experimental.or
 
 class Enemy(
     private val game: GIGame,
     x: Float,
     y: Float,
-    val type: Int,
+    val level: Int,
     val skin: Int
 ) : Destroyable {
 
@@ -42,7 +42,7 @@ class Enemy(
 
         val enemyShape = PolygonShape()
 
-        enemyShape.set(enemyBody[type])
+        enemyShape.set(enemyBodyVertices[level % 7])
         enemyFixtureDef.shape = enemyShape
         body.createFixture(enemyFixtureDef).userData = this
     }

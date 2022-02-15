@@ -39,7 +39,7 @@ class GIGame : Game(){
     val levelController = LevelController(this)
 
     init {
-        world.setContactListener(WorldCollisionController())
+        world.setContactListener(WorldCollisionController(this))
         initEnemyVertices()
         for (i in 0..6)
             for (j in 0 .. 20)
