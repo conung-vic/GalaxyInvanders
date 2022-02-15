@@ -24,12 +24,14 @@ class PlayerController(
             xVel <= 500
         ) {
             xVel += 10
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            game.player.shoot()
         } else {
             if (xVel.absoluteValue <= 7f) xVel = 0f
             else if (xVel > 0f) xVel -= 5
             else xVel += 5
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            game.player.shoot()
         }
 
         game.player.body.linearVelocity = Vector2(xVel, yVel)

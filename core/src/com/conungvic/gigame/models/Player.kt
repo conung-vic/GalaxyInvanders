@@ -23,7 +23,7 @@ class Player(game: GIGame): Destroyable {
     override fun isWaitForDestroy(): Boolean = waitForDestroy
 
     var life: Int = 5
-    var weaponLevel: Int = 2
+    var weaponLevel: Int = 20
     var weaponPower: Int = 2
     var weaponSpeed: Float = 2.0f
     var state: State = State.LIVE
