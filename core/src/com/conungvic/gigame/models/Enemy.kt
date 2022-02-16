@@ -27,6 +27,8 @@ class Enemy(
     override fun isWaitForDestroy(): Boolean = waitForDestroy
 
     val body: Body
+    var health: Int
+    val maxHealth: Int
 
     init {
         val enemyFixtureDef = FixtureDef()
@@ -35,16 +37,18 @@ class Enemy(
         enemyFixtureDef.filter.maskBits = PLAYER_BIT or PLAYER_BULLET_BIT
 
         val bDef = BodyDef()
-        bDef.type = BodyDef.BodyType.DynamicBody
+        bDef.type = BodyDef.BodyType.StaticBody
         bDef.position.set(x, y)
         body = game.world.createBody(bDef)
-        body.setLinearVelocity(0f, 0f)
 
         val enemyShape = PolygonShape()
 
         enemyShape.set(enemyBodyVertices[level % 7])
         enemyFixtureDef.shape = enemyShape
         body.createFixture(enemyFixtureDef).userData = this
+
+        maxHealth = 100 + (GameModel.currentLevel - 1) * 10 + level * 5
+        health = maxHealth
     }
 
     override fun destroy() {

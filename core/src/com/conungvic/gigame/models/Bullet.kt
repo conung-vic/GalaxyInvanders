@@ -5,26 +5,29 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.FixtureDef
 import com.badlogic.gdx.physics.box2d.PolygonShape
-import com.conungvic.gigame.ENEMY_BIT
-import com.conungvic.gigame.GIGame
-import com.conungvic.gigame.PLAYER_BULLET_BIT
-import com.conungvic.gigame.WALL_BIT
+import com.conungvic.gigame.*
 import kotlin.experimental.or
+
+enum class BulletOwner {
+    PLAYER, ENEMY
+}
 
 class Bullet(
     private val game: GIGame,
     x: Float,
-    y: Float
+    y: Float,
+    owner: BulletOwner
 ): Destroyable {
     private var waitForDestroy = false
     override fun setWaitForDestroy(value: Boolean) { waitForDestroy = value }
     override fun isWaitForDestroy(): Boolean = waitForDestroy
     val body: Body
+    val power: Int = 100 + game.player.weaponPower * 5
 
     init {
         val bulletFixDef = FixtureDef()
-        bulletFixDef.filter.categoryBits = PLAYER_BULLET_BIT
-        bulletFixDef.filter.maskBits = WALL_BIT or ENEMY_BIT
+        bulletFixDef.filter.categoryBits = if (owner == BulletOwner.PLAYER) PLAYER_BULLET_BIT else ENEMY_BULLET_BIT
+        bulletFixDef.filter.maskBits = WALL_BIT or (if (owner == BulletOwner.PLAYER) ENEMY_BIT else PLAYER_BIT)
         val bulletShape = PolygonShape()
         val vertices = arrayOf(
             Vector2(-1f, 2f),
@@ -39,7 +42,7 @@ class Bullet(
         bDef.type = BodyDef.BodyType.DynamicBody
         bDef.position.set(x, y)
         body = game.world.createBody(bDef)
-        body.setLinearVelocity(0f, 220f)
+        body.setLinearVelocity(0f, if (owner == BulletOwner.PLAYER) 220f else -220f)
         body.createFixture(bulletFixDef).userData = this
     }
 

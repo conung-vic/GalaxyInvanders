@@ -23,6 +23,7 @@ const val WALL_BIT: Short = 1
 const val PLAYER_BIT: Short = 2
 const val PLAYER_BULLET_BIT: Short = 4
 const val ENEMY_BIT: Short = 16
+const val ENEMY_BULLET_BIT: Short = 32
 
 class GIGame : Game(){
     lateinit var batch: SpriteBatch
@@ -44,6 +45,7 @@ class GIGame : Game(){
         for (i in 0..6)
             for (j in 0 .. 20)
                 enemies.add(enemyController.createEnemy(i, 100f + j * 60, 300f + i * 70))
+//        enemies.add(enemyController.createEnemy(6, 600f, 300f))
     }
 
     override fun create() {

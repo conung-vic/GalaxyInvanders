@@ -4,8 +4,12 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.conungvic.gigame.GIGame
+import com.conungvic.gigame.models.Bullet
+import com.conungvic.gigame.models.BulletOwner
 import com.conungvic.gigame.models.Enemy
 import com.conungvic.gigame.models.GameModel
+import com.conungvic.gigame.ui.utils.ALIEN_HIT
+import com.conungvic.gigame.ui.utils.ALIEN_SHOOT
 import com.conungvic.gigame.ui.utils.EXPLOSION_2
 
 val enemyBodyVertices: MutableMap<Int, Array<Vector2>> = mutableMapOf()
@@ -77,16 +81,23 @@ fun initEnemyVertices() {
 }
 
 class EnemyController(
-    private val game:GIGame
+    private val game: GIGame
 ) {
+    val bullets: MutableList<Bullet> = mutableListOf()
 
-    fun createEnemy(level: Int, x:Float, y: Float) = Enemy(game, x, y, level, MathUtils.random(0, 2))
+    fun createEnemy(level: Int, x: Float, y: Float) = Enemy(game, x, y, level, MathUtils.random(0, 2))
 
-    fun hit(enemy: Enemy) {
-        enemy.setWaitForDestroy(true)
-        val enemyHitSound = this.game.assetManager.get(EXPLOSION_2, Sound::class.java)
-        enemyHitSound.play()
-        GameModel.scores += 100
+    fun hit(enemy: Enemy, bullet: Bullet) {
+        enemy.health -= bullet.power
+        if (enemy.health <= 0) {
+            enemy.setWaitForDestroy(true)
+            val enemyHitSound = this.game.assetManager.get(EXPLOSION_2, Sound::class.java)
+            enemyHitSound.play()
+            GameModel.scores += enemy.maxHealth
+        } else {
+            val enemyHitSound = this.game.assetManager.get(ALIEN_HIT, Sound::class.java)
+            enemyHitSound.play()
+        }
     }
 
     fun processObjects() {
@@ -97,6 +108,19 @@ class EnemyController(
                 it.remove()
                 enemy.destroy()
             }
+        }
+    }
+
+    private fun createBullet(enemy: Enemy) {
+        val bullet = Bullet(game, enemy.body.position.x, enemy.body.position.y - 30, BulletOwner.ENEMY)
+        bullets.add(bullet)
+    }
+
+    fun shoot(enemy: Enemy) {
+        if (bullets.size < GameModel.currentLevel * 3 + 1) {
+            val enemyShootSound = this.game.assetManager.get(ALIEN_SHOOT, Sound::class.java)
+            enemyShootSound.play()
+            createBullet(enemy)
         }
     }
 }

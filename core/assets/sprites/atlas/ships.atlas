@@ -151,6 +151,13 @@ alien_7
   orig: 48, 55
   offset: 0, 0
   index: 2
+alien_bullet
+  rotate: false
+  xy: 139, 27
+  size: 6, 11
+  orig: 6, 11
+  offset: 0, 0
+  index: -1
 bullet
   rotate: false
   xy: 502, 113

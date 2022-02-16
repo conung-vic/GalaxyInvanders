@@ -1,15 +1,15 @@
 package com.conungvic.gigame.ui.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_WIDTH
-import com.conungvic.gigame.controllers.PlayerController
 import com.conungvic.gigame.models.Enemy
-import com.conungvic.gigame.models.Player
 import com.conungvic.gigame.ui.scenes.Hud
 
 private const val s = "Not yet implemented"
@@ -18,6 +18,7 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
 
     private val playerImage: Sprite
     private val bulletImage: Sprite
+    private val enemyBulletImage: Sprite
     private val hud = Hud(game)
     private val shapeRenderer: ShapeRenderer
     private val enemyImages: MutableList<List<Sprite>> = mutableListOf()
@@ -25,6 +26,7 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     init {
         playerImage = Sprite(TextureRegion(game.atlas.findRegion("player")))
         bulletImage = Sprite(TextureRegion(game.atlas.findRegion("bullet")))
+        enemyBulletImage = Sprite(TextureRegion(game.atlas.findRegion("alien_bullet")))
         for (i in 1..7) {
             val imageName = "alien_%d".format(i)
             val sprites = mutableListOf<Sprite>()
@@ -51,8 +53,12 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
 
         game.batch.begin()
         drawImage(playerImage, game.player.body)
-        for (bullet in game.player.bullets) {
+        for (bullet in game.playerController.bullets) {
             drawImage(bulletImage, bullet.body)
+        }
+
+        for (bullet in game.enemyController.bullets) {
+            drawImage(enemyBulletImage, bullet.body)
         }
 
         for (enemy in game.enemies) {
@@ -60,8 +66,32 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
         }
         game.batch.end()
 
-        b2dr.render(game.world, camera.combined)
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
+        for (enemy in game.enemies) {
+            drawEnemyHealthBar(enemy)
+        }
+        shapeRenderer.end()
+
+//        b2dr.render(game.world, camera.combined)
         hud.render()
+    }
+
+    private fun getCoordVector(image: Sprite, body: Body): Vector2 {
+        val x: Float = (body.position?.x ?: (V_WIDTH / 2)) - image.width / 2
+        val y: Float = (body.position?.y ?: 60f) - image.height / 2
+        return Vector2(x, y)
+    }
+
+    private fun drawEnemyHealthBar(enemy: Enemy) {
+        if (enemy.health != enemy.maxHealth) {
+            val image = enemyImages[enemy.level % 7][enemy.skin]
+            val ratio = image.width * enemy.health / enemy.maxHealth
+            val coordVector = getCoordVector(image, enemy.body)
+            shapeRenderer.color = Color.RED
+            shapeRenderer.rect(coordVector.x, coordVector.y + image.height +2, image.width, 5f)
+            shapeRenderer.color = Color.GREEN
+            shapeRenderer.rect(coordVector.x, coordVector.y + image.height +2, ratio, 5f)
+        }
     }
 
     private fun drawEnemy(enemy: Enemy) {
@@ -70,9 +100,8 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     }
 
     private fun drawImage(image: Sprite, body: Body) {
-        val x: Float = (body.position?.x ?: (V_WIDTH / 2)) - image.width / 2
-        val y: Float = (body.position?.y ?: 60f) - image.height / 2
-        game.batch.draw(image, x, y)
+        val coords = getCoordVector(image, body)
+        game.batch.draw(image, coords.x, coords.y)
     }
 
     override fun show() {
@@ -93,5 +122,10 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
 
     override fun hide() {
         Gdx.app.log("GameScreen:hide", s)
+    }
+
+    override fun dispose() {
+        shapeRenderer.dispose()
+        hud.dispose()
     }
 }

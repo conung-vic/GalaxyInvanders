@@ -36,10 +36,10 @@ class WorldCollisionController(
             PLAYER_BULLET_BIT or ENEMY_BIT -> {
                 if (cDefA == PLAYER_BULLET_BIT) {
                     markBulletForDestroy(fixA)
-                    game.enemyController.hit((fixB?.userData as Enemy))
+                    game.enemyController.hit((fixB?.userData as Enemy), (fixA?.userData as Bullet))
                 } else {
                     markBulletForDestroy(fixB)
-                    game.enemyController.hit((fixA?.userData as Enemy))
+                    game.enemyController.hit((fixA?.userData as Enemy), (fixB?.userData as Bullet))
                 }
             }
             else -> {
