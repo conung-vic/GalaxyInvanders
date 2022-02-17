@@ -94,6 +94,7 @@ class EnemyController(
             val enemyHitSound = this.game.assetManager.get(EXPLOSION_2, Sound::class.java)
             enemyHitSound.play()
             GameModel.scores += enemy.maxHealth
+            GameModel.killed++
         } else {
             val enemyHitSound = this.game.assetManager.get(ALIEN_HIT, Sound::class.java)
             enemyHitSound.play()

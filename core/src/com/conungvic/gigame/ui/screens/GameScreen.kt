@@ -1,6 +1,7 @@
 package com.conungvic.gigame.ui.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -10,9 +11,9 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_WIDTH
 import com.conungvic.gigame.models.Enemy
+import com.conungvic.gigame.models.GameModel
+import com.conungvic.gigame.models.GameState
 import com.conungvic.gigame.ui.scenes.Hud
-
-private const val s = "Not yet implemented"
 
 class GameScreen(game: GIGame) : CommonScreen(game) {
 
@@ -30,7 +31,7 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
         for (i in 1..7) {
             val imageName = "alien_%d".format(i)
             val sprites = mutableListOf<Sprite>()
-            game.atlas.findRegions(imageName).forEach { it ->
+            game.atlas.findRegions(imageName).forEach {
                 sprites.add(Sprite(TextureRegion(it)))
             }
             enemyImages.add(sprites)
@@ -41,11 +42,20 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     }
 
     override fun update(delta: Float) {
+        game.gameController.update(delta)
         hud.update()
         super.update(delta)
-        game.playerController.processObjects()
-        game.enemyController.processObjects()
-        game.playerController.handleInput()
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.gameController.togglePause()
+        }
+
+        if (GameModel.state == GameState.PLAYING) {
+            game.playerController.processObjects()
+            game.enemyController.processObjects()
+            game.playerController.handleInput()
+            game.levelController.checkLevel()
+        }
     }
 
     override fun render(delta: Float) {
@@ -95,7 +105,8 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     }
 
     private fun drawEnemy(enemy: Enemy) {
-        val image = enemyImages[enemy.level % 7][enemy.skin]
+        val imgIdx = ((GameModel.currentLevel - 1) % 7 + enemy.level - GameModel.currentLevel) % 7
+        val image = enemyImages[imgIdx][enemy.skin]
         drawImage(image, enemy.body)
     }
 
@@ -105,23 +116,23 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     }
 
     override fun show() {
-        Gdx.app.log("GameScreen:show", s)
+//        Gdx.app.log("GameScreen:show", s)
     }
 
     override fun resize(width: Int, height: Int) {
-        Gdx.app.log("GameScreen:resize", s)
+//        Gdx.app.log("GameScreen:resize", s)
     }
 
     override fun pause() {
-        Gdx.app.log("GameScreen:pause", s)
+//        Gdx.app.log("GameScreen:pause", s)
     }
 
     override fun resume() {
-        Gdx.app.log("GameScreen:resume", s)
+//        Gdx.app.log("GameScreen:resume", s)
     }
 
     override fun hide() {
-        Gdx.app.log("GameScreen:hide", s)
+//        Gdx.app.log("GameScreen:hide", s)
     }
 
     override fun dispose() {

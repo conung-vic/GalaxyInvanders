@@ -16,7 +16,7 @@ import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_HEIGHT
 import com.conungvic.gigame.V_WIDTH
 import com.conungvic.gigame.models.GameModel
-import com.conungvic.gigame.models.Player
+import com.conungvic.gigame.models.GameState
 import com.conungvic.gigame.ui.utils.FontManager
 
 class Hud(game: GIGame): Disposable {
@@ -37,6 +37,7 @@ class Hud(game: GIGame): Disposable {
     private val levelLabel: Label
     private val levelNumLabel: Label
     private val lifeCounterLabel: Label
+    private val readyGoLabel: Label
 
     private val bottomLeft = Vector2(0f, 0f)
     private val topLeft = Vector2(0f, V_HEIGHT)
@@ -80,13 +81,17 @@ class Hud(game: GIGame): Disposable {
         scoreLabel = Label("999999", labelStyle)
         scoreLabel.setPosition(V_WIDTH / 2 - scoreLabel.width / 2, V_HEIGHT - 65)
 
+        readyGoLabel = Label("R E A D Y", labelStyle)
+        readyGoLabel.setPosition(V_WIDTH / 2 - readyGoLabel.width / 2, V_HEIGHT / 2 - readyGoLabel.height / 2)
+        readyGoLabel.isVisible = false
+
         labelStyle = Label.LabelStyle(FontManager.nasa45, Color.RED)
         levelLabel = Label("Level: ", labelStyle)
-        levelLabel.setPosition(V_WIDTH - levelLabel.width - 200, V_HEIGHT - 65)
+        levelLabel.setPosition(V_WIDTH - levelLabel.width - 100, V_HEIGHT - 65)
 
         labelStyle = Label.LabelStyle(FontManager.nasa45, Color.YELLOW)
         levelNumLabel = Label("111", labelStyle)
-        levelNumLabel.setPosition(V_WIDTH - levelLabel.width - levelNumLabel.width, V_HEIGHT - 65)
+        levelNumLabel.setPosition(V_WIDTH - levelNumLabel.width - 20, V_HEIGHT - 65)
 
         stage.addActor(livesLabel)
         stage.addActor(lifeCounterLabel)
@@ -97,6 +102,7 @@ class Hud(game: GIGame): Disposable {
         stage.addActor(scoreLabel)
         stage.addActor(levelLabel)
         stage.addActor(levelNumLabel)
+        stage.addActor(readyGoLabel)
 
         shapeRenderer = ShapeRenderer()
         shapeRenderer.projectionMatrix = batch.projectionMatrix
@@ -111,6 +117,23 @@ class Hud(game: GIGame): Disposable {
         if (debug) drawDebugScreen()
         drawLifeCounter()
         this.stage.draw()
+        if (GameModel.state == GameState.STARTING) {
+            if (GameModel.stateTime <= 1) {
+                readyGoLabel.isVisible = true
+                readyGoLabel.setText("R E A D Y")
+            } else if (GameModel.stateTime <= 1.5) {
+                readyGoLabel.isVisible = false
+            }  else if (GameModel.stateTime <= 2.5) {
+                readyGoLabel.isVisible = true
+                readyGoLabel.setText("G O ! ! !")
+            }
+        } else if (GameModel.state == GameState.PAUSED) {
+            readyGoLabel.isVisible = true
+            readyGoLabel.setText("P A U S E")
+        } else {
+            readyGoLabel.isVisible = false
+        }
+
     }
 
     private fun drawBorder(bkColor: Color, fgColor: Color) {
@@ -129,7 +152,7 @@ class Hud(game: GIGame): Disposable {
     }
 
     private fun drawLifeCounter() {
-        val y = 867f
+        val y = V_HEIGHT - playerImage.height - 5
         this.batch.begin()
         if (game.player.life <= 5) {
             for (i in 1.. game.player.life) {

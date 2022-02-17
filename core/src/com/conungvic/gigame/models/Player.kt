@@ -8,10 +8,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape
 import com.conungvic.gigame.*
 import kotlin.experimental.or
 
-enum class State {
-    LIVE, DEAD, INVULNERABLE
-}
-
 class Player(game: GIGame): Destroyable {
     private val game: GIGame
     lateinit var body: Body
@@ -22,10 +18,8 @@ class Player(game: GIGame): Destroyable {
 
     var life: Int = 5
     var weaponLevel: Int = 20
-    var weaponPower: Int = 2
-    var weaponSpeed: Float = 2.0f
-    var state: State = State.LIVE
-
+    var weaponPower: Int = 1
+    var weaponSpeed: Float = 1.0f
 
     init {
         this.game = game

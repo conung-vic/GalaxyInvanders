@@ -59,14 +59,14 @@ class TitleScreen(game: GIGame) : CommonScreen(game) {
     }
 
     override fun pause() {
-        Gdx.app.log("TitleScreen:pause","Not yet implemented")
+//        Gdx.app.log("TitleScreen:pause","Not yet implemented")
     }
 
     override fun resume() {
-        Gdx.app.log("TitleScreen:resume","Not yet implemented")
+//        Gdx.app.log("TitleScreen:resume","Not yet implemented")
     }
 
     override fun hide() {
-        Gdx.app.log("TitleScreen:hide","Not yet implemented")
+//        Gdx.app.log("TitleScreen:hide","Not yet implemented")
     }
 }

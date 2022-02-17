@@ -16,13 +16,13 @@ import com.conungvic.gigame.V_WIDTH
 import com.conungvic.gigame.ui.utils.BACKGROUND_TEMPLATE
 
 abstract class CommonScreen(game: GIGame) : Screen {
-    protected val viewport: Viewport
+    private val viewport: Viewport
     protected val stage: Stage
     protected val game: GIGame
-    protected var back: Texture? = null
+    private var back: Texture? = null
     private val backNum: Int = MathUtils.random(1, 12)
-    protected val b2dr: Box2DDebugRenderer = Box2DDebugRenderer()
-    protected val camera: OrthographicCamera = OrthographicCamera()
+    private val b2dr: Box2DDebugRenderer = Box2DDebugRenderer()
+    private val camera: OrthographicCamera = OrthographicCamera()
 
     init {
         this.game = game

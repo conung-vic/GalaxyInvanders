@@ -7,8 +7,6 @@ import com.conungvic.gigame.models.Bullet
 import com.conungvic.gigame.models.Enemy
 import kotlin.experimental.or
 
-private const val s = "Not yet implemented"
-
 class WorldCollisionController(
     val game: GIGame
 ) : ContactListener {
@@ -54,15 +52,15 @@ class WorldCollisionController(
     }
 
     override fun endContact(contact: Contact?) {
-        Gdx.app.log("WorldContactListener:endContact", s)
+//        Gdx.app.log("WorldContactListener:endContact", s)
     }
 
     override fun preSolve(contact: Contact?, oldManifold: Manifold?) {
-        Gdx.app.log("WorldContactListener:preSolve", s)
+//        Gdx.app.log("WorldContactListener:preSolve", s)
     }
 
     override fun postSolve(contact: Contact?, impulse: ContactImpulse?) {
-        Gdx.app.log("WorldContactListener:postSolve", s)
+//        Gdx.app.log("WorldContactListener:postSolve", s)
     }
 
 

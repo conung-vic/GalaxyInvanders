@@ -16,8 +16,8 @@ import com.conungvic.gigame.ui.screens.TitleScreen
 import com.conungvic.gigame.ui.utils.GIAssetManager
 import kotlin.experimental.or
 
-const val V_WIDTH = 1600f
-const val V_HEIGHT = 900f
+const val V_WIDTH = 900f
+const val V_HEIGHT = 600f
 
 const val WALL_BIT: Short = 1
 const val PLAYER_BIT: Short = 2
@@ -38,14 +38,12 @@ class GIGame : Game(){
     val playerController = PlayerController(this)
     val enemyController = EnemyController(this)
     val levelController = LevelController(this)
+    val gameController = GameController(this)
 
     init {
         world.setContactListener(WorldCollisionController(this))
         initEnemyVertices()
-        for (i in 0..6)
-            for (j in 0 .. 20)
-                enemies.add(enemyController.createEnemy(i, 100f + j * 60, 300f + i * 70))
-//        enemies.add(enemyController.createEnemy(6, 600f, 300f))
+        levelController.createLevel()
     }
 
     override fun create() {

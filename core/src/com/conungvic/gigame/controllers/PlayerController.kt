@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.models.Bullet
 import com.conungvic.gigame.models.BulletOwner
+import com.conungvic.gigame.models.GameModel
 import com.conungvic.gigame.ui.utils.PLAYER_SHOOT
 import kotlin.math.absoluteValue
 
@@ -61,6 +62,7 @@ class PlayerController(
 
     private fun shoot() {
         if (bullets.size < game.player.weaponLevel) {
+            GameModel.playerShootCount++
             val playerShootSound = this.game.assetManager.get(PLAYER_SHOOT, Sound::class.java)
             playerShootSound.play()
             createBullet()
