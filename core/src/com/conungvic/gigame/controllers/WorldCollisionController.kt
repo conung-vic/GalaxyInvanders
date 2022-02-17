@@ -3,6 +3,7 @@ package com.conungvic.gigame.controllers
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.physics.box2d.*
 import com.conungvic.gigame.*
+import com.conungvic.gigame.models.Bonus
 import com.conungvic.gigame.models.Bullet
 import com.conungvic.gigame.models.Enemy
 import kotlin.experimental.or
@@ -25,19 +26,29 @@ class WorldCollisionController(
                 else
                     markBulletForDestroy(fixB)
             }
-            WALL_BIT or PLAYER_BIT -> {
-                Gdx.app.log("WorldCollisionController", "Player and wall")
-            }
-            PLAYER_BULLET_BIT or PLAYER_BIT -> {
-                Gdx.app.log("WorldCollisionController", "player bullet and player")
-            }
             PLAYER_BULLET_BIT or ENEMY_BIT -> {
                 if (cDefA == PLAYER_BULLET_BIT) {
-                    markBulletForDestroy(fixA)
                     game.enemyController.hit((fixB?.userData as Enemy), (fixA?.userData as Bullet))
+                    markBulletForDestroy(fixA)
                 } else {
-                    markBulletForDestroy(fixB)
                     game.enemyController.hit((fixA?.userData as Enemy), (fixB?.userData as Bullet))
+                    markBulletForDestroy(fixB)
+                }
+            }
+            PLAYER_BIT or BONUS_BIT -> {
+                if (cDefA == PLAYER_BIT) {
+                    (fixB?.userData as Bonus).apply()
+                    (fixB.userData as Bonus).setWaitForDestroy(true)
+                } else {
+                    (fixA?.userData as Bonus).apply()
+                    (fixA.userData as Bonus).setWaitForDestroy(true)
+                }
+            }
+            BONUS_BIT or WALL_BIT -> {
+                if (cDefA == BONUS_BIT) {
+                    (fixA?.userData as Bonus).setWaitForDestroy(true)
+                } else {
+                    (fixB?.userData as Bonus).setWaitForDestroy(true)
                 }
             }
             else -> {

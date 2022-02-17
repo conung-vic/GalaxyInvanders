@@ -90,11 +90,12 @@ class EnemyController(
     fun hit(enemy: Enemy, bullet: Bullet) {
         enemy.health -= bullet.power
         if (enemy.health <= 0) {
-            enemy.setWaitForDestroy(true)
             val enemyHitSound = this.game.assetManager.get(EXPLOSION_2, Sound::class.java)
             enemyHitSound.play()
             GameModel.scores += enemy.maxHealth
             GameModel.killed++
+            game.gameController.spawnBonus(enemy.body.position.x, enemy.body.position.y)
+            enemy.setWaitForDestroy(true)
         } else {
             val enemyHitSound = this.game.assetManager.get(ALIEN_HIT, Sound::class.java)
             enemyHitSound.play()

@@ -24,6 +24,7 @@ const val PLAYER_BIT: Short = 2
 const val PLAYER_BULLET_BIT: Short = 4
 const val ENEMY_BIT: Short = 16
 const val ENEMY_BULLET_BIT: Short = 32
+const val BONUS_BIT: Short = 64
 
 class GIGame : Game(){
     lateinit var batch: SpriteBatch

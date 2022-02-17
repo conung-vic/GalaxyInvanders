@@ -16,8 +16,8 @@ class Player(game: GIGame): Destroyable {
     override fun setWaitForDestroy(value: Boolean) { waitForDestroy = value }
     override fun isWaitForDestroy(): Boolean = waitForDestroy
 
-    var life: Int = 5
-    var weaponLevel: Int = 20
+    var life: Int = 3
+    var weaponLevel: Int = 33
     var weaponPower: Int = 1
     var weaponSpeed: Float = 1.0f
 
@@ -28,13 +28,13 @@ class Player(game: GIGame): Destroyable {
 
     private fun definePlayer() {
         val bDef = BodyDef()
-        bDef.position.set(V_WIDTH / 2, 60f)
+        bDef.position.set(V_WIDTH / 2, 45f)
         bDef.type = BodyDef.BodyType.DynamicBody
 
         body = game.world.createBody(bDef)
         val fDef = FixtureDef()
         fDef.filter.categoryBits = PLAYER_BIT
-        fDef.filter.maskBits = WALL_BIT or ENEMY_BIT
+        fDef.filter.maskBits = WALL_BIT or ENEMY_BIT or BONUS_BIT
         val playerShape = PolygonShape()
         val vertices = arrayOf(
             Vector2(0f, -36f),

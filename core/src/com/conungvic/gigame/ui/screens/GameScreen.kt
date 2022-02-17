@@ -10,9 +10,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_WIDTH
-import com.conungvic.gigame.models.Enemy
-import com.conungvic.gigame.models.GameModel
-import com.conungvic.gigame.models.GameState
+import com.conungvic.gigame.models.*
 import com.conungvic.gigame.ui.scenes.Hud
 
 class GameScreen(game: GIGame) : CommonScreen(game) {
@@ -23,6 +21,7 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
     private val hud = Hud(game)
     private val shapeRenderer: ShapeRenderer
     private val enemyImages: MutableList<List<Sprite>> = mutableListOf()
+    private val bonusImages: MutableMap<BonusType, Sprite> = mutableMapOf()
 
     init {
         playerImage = Sprite(TextureRegion(game.atlas.findRegion("player")))
@@ -39,6 +38,11 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
         shapeRenderer = ShapeRenderer()
         shapeRenderer.projectionMatrix = game.batch.projectionMatrix
         shapeRenderer.setAutoShapeType(true)
+
+        bonusImages[BonusType.LIFE] = Sprite(TextureRegion(game.atlas.findRegion("life_bonus")))
+        bonusImages[BonusType.WEAPON_LEVEL] = Sprite(TextureRegion(game.atlas.findRegion("wl_bonus")))
+        bonusImages[BonusType.WEAPON_POWER] = Sprite(TextureRegion(game.atlas.findRegion("wp_bonus")))
+        bonusImages[BonusType.WEAPON_SPEED] = Sprite(TextureRegion(game.atlas.findRegion("ws_bonus")))
     }
 
     override fun update(delta: Float) {
@@ -74,6 +78,10 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
         for (enemy in game.enemies) {
             drawEnemy(enemy)
         }
+
+        for (bonus in game.gameController.bonuses) {
+            drawBonus(bonus)
+        }
         game.batch.end()
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
@@ -84,6 +92,11 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
 
 //        b2dr.render(game.world, camera.combined)
         hud.render()
+    }
+
+    private fun drawBonus(bonus: Bonus) {
+        val img = bonusImages[bonus.type]!!
+        drawImage(img, bonus.body)
     }
 
     private fun getCoordVector(image: Sprite, body: Body): Vector2 {

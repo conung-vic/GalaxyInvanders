@@ -5,12 +5,17 @@ enum class GameState {
 }
 
 object GameModel {
-    var currentLevel: Int = 25
+    var currentLevel: Int = 1
     var scores: Int = 0
     var killed: Int = 0
-    var bonuses: Array<Int> = arrayOf(0, 0, 0, 0)
     var playerShootCount : Int = 0
     var state: GameState = GameState.STARTING
     var stateTime: Float = 0f
+    var bonuses: MutableMap<BonusType, Int> = mutableMapOf(
+        Pair(BonusType.LIFE, 0),
+        Pair(BonusType.WEAPON_SPEED, 0),
+        Pair(BonusType.WEAPON_POWER, 0),
+        Pair(BonusType.WEAPON_LEVEL, 0)
+    )
 
 }

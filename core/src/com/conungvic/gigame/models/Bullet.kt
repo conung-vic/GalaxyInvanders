@@ -42,7 +42,8 @@ class Bullet(
         bDef.type = BodyDef.BodyType.DynamicBody
         bDef.position.set(x, y)
         body = game.world.createBody(bDef)
-        body.setLinearVelocity(0f, if (owner == BulletOwner.PLAYER) 220f else -220f)
+        val velocity = if (owner == BulletOwner.PLAYER) 220f * ((10f + game.player.weaponSpeed) / 10f) else -220f
+        body.setLinearVelocity(0f, velocity)
         body.createFixture(bulletFixDef).userData = this
     }
 

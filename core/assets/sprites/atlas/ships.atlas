@@ -165,10 +165,38 @@ bullet
   orig: 6, 11
   offset: 0, 0
   index: -1
+life_bonus
+  rotate: false
+  xy: 275, 54
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 player
   rotate: false
   xy: 2, 52
   size: 49, 72
   orig: 49, 72
+  offset: 0, 0
+  index: -1
+wl_bonus
+  rotate: false
+  xy: 297, 66
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+wp_bonus
+  rotate: false
+  xy: 253, 54
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+ws_bonus
+  rotate: false
+  xy: 319, 66
+  size: 20, 20
+  orig: 20, 20
   offset: 0, 0
   index: -1
