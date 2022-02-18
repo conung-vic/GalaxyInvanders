@@ -113,7 +113,19 @@ class Hud(game: GIGame): Disposable {
     }
 
     fun render() {
-        drawBorder(Color.BLACK, Color(255f, 165f, 0f, 0f))
+        var backColor = Color.BLACK
+        if (GameModel.state == GameState.PLAYER_DIED) {
+            backColor = when(GameModel.stateTime) {
+                in 0.0f.. 0.5f -> Color.RED
+                in 0.5f..1.0f -> Color.BLACK
+                in 1.0f..1.5f -> Color.RED
+                in 1.5f..2.0f -> Color.BLACK
+                in 2.0f..2.5f -> Color.RED
+                else -> Color.BLACK
+            }
+
+        }
+        drawBorder(backColor, Color(255f, 165f, 0f, 0f))
         if (debug) drawDebugScreen()
         drawLifeCounter()
         this.stage.draw()
@@ -130,6 +142,9 @@ class Hud(game: GIGame): Disposable {
         } else if (GameModel.state == GameState.PAUSED) {
             readyGoLabel.isVisible = true
             readyGoLabel.setText("P A U S E")
+        } else if (GameModel.state == GameState.END_GAME) {
+            readyGoLabel.isVisible = true
+            readyGoLabel.setText("T H E    E N D")
         } else {
             readyGoLabel.isVisible = false
         }

@@ -102,6 +102,17 @@ class EnemyController(
         }
     }
 
+    fun clearBullets() {
+        val bulletIt = bullets.iterator()
+        while (bulletIt.hasNext()) {
+            val bullet = bulletIt.next()
+            if (bullet.isWaitForDestroy()) {
+                bulletIt.remove()
+                bullet.destroy()
+            }
+        }
+    }
+
     fun processObjects() {
         val it = game.enemies.iterator()
         while (it.hasNext()) {
@@ -111,6 +122,15 @@ class EnemyController(
                 enemy.destroy()
             }
         }
+
+        clearBullets()
+
+        game.enemies.forEach {
+            if (
+                bullets.size < GameModel.currentLevel * 3 + 1 &&
+                MathUtils.random(500) < 1
+            ) shoot(it)
+        }
     }
 
     private fun createBullet(enemy: Enemy) {
@@ -118,11 +138,9 @@ class EnemyController(
         bullets.add(bullet)
     }
 
-    fun shoot(enemy: Enemy) {
-        if (bullets.size < GameModel.currentLevel * 3 + 1) {
-            val enemyShootSound = this.game.assetManager.get(ALIEN_SHOOT, Sound::class.java)
-            enemyShootSound.play()
-            createBullet(enemy)
-        }
+    private fun shoot(enemy: Enemy) {
+        val enemyShootSound = this.game.assetManager.get(ALIEN_SHOOT, Sound::class.java)
+        enemyShootSound.play()
+        createBullet(enemy)
     }
 }

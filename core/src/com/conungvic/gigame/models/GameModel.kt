@@ -1,7 +1,7 @@
 package com.conungvic.gigame.models
 
 enum class GameState {
-    STARTING, PLAYING, PAUSED, PLAYER_DIED
+    STARTING, PLAYING, PAUSED, PLAYER_DIED, END_GAME
 }
 
 object GameModel {

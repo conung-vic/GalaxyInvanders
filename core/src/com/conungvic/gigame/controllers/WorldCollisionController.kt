@@ -51,6 +51,20 @@ class WorldCollisionController(
                     (fixB?.userData as Bonus).setWaitForDestroy(true)
                 }
             }
+            ENEMY_BULLET_BIT or WALL_BIT -> {
+                if (cDefA == ENEMY_BULLET_BIT )
+                    markBulletForDestroy(fixA)
+                else
+                    markBulletForDestroy(fixB)
+            }
+            ENEMY_BULLET_BIT or PLAYER_BIT -> {
+                if (cDefA == ENEMY_BULLET_BIT) {
+                    markBulletForDestroy(fixA)
+                } else {
+                    markBulletForDestroy(fixB)
+                }
+                game.player.hit()
+            }
             else -> {
                 Gdx.app.log("WorldCollisionController", "Unknown collision")
             }

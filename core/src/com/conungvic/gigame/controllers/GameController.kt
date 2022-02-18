@@ -15,10 +15,24 @@ class GameController(val game: GIGame) {
 
     fun update(delta: Float) {
         GameModel.stateTime += delta
-        if (GameModel.stateTime >= 2.5f && GameModel.state == GameState.STARTING) {
-            GameModel.stateTime = 0f
-            GameModel.state = GameState.PLAYING
-            game.gameController.bonuses.forEach { it.body.setLinearVelocity(0f, -170f) }
+
+        when (GameModel.state) {
+            GameState.STARTING -> {
+                if (GameModel.stateTime >= 2.5f) {
+                    GameModel.stateTime = 0f
+                    GameModel.state = GameState.PLAYING
+                    game.gameController.bonuses.forEach { it.body.setLinearVelocity(0f, -170f) }
+                }
+            }
+            GameState.PLAYER_DIED -> {
+                if (GameModel.stateTime >= 2.5f) {
+                    GameModel.stateTime = 0f
+                    GameModel.state = if (game.player.life == 0) GameState.END_GAME else GameState.STARTING
+                }
+            }
+            else -> {
+//                Gdx.app.log()
+            }
         }
 
         if (GameModel.killed > 0 && GameModel.killed % 100 == 0) {
@@ -69,6 +83,16 @@ class GameController(val game: GIGame) {
             in  71..150 -> bonuses.add(WeaponPowerBonus(game, x, y))
             in 150..300 -> bonuses.add(WeaponSpeedBonus(game, x, y))
         }
+    }
+
+    fun clearOrStopObjects() {
+        for (bullet in game.playerController.bullets) {
+            bullet.destroy()
+        }
+        for (bullet in game.enemyController.bullets) {
+            bullet.destroy()
+        }
+        game.gameController.bonuses.forEach { it.body.setLinearVelocity(0f, 0f) }
     }
 
 }

@@ -44,7 +44,7 @@ class PlayerController(
         game.player.body.linearVelocity = Vector2(xVel, yVel)
     }
 
-    fun processObjects() {
+    fun clearBullets() {
         val it = bullets.iterator()
         while (it.hasNext()) {
             val bullet = it.next()
@@ -53,6 +53,10 @@ class PlayerController(
                 bullet.destroy()
             }
         }
+    }
+
+    fun processObjects() {
+        clearBullets()
     }
 
     private fun createBullet() {

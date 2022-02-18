@@ -47,19 +47,11 @@ class LevelController(val game: GIGame) {
 
     fun checkLevel() {
         if (game.enemies.isEmpty()) {
-            clearOrStopObjects()
+            game.gameController.clearOrStopObjects()
             GameModel.currentLevel += 1
             createLevel()
         }
     }
 
-    private fun clearOrStopObjects() {
-        for (bullet in game.playerController.bullets) {
-            bullet.destroy()
-        }
-        for (bullet in game.enemyController.bullets) {
-            bullet.destroy()
-        }
-        game.gameController.bonuses.forEach { it.body.setLinearVelocity(0f, 0f) }
-    }
+
 }

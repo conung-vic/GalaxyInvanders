@@ -78,7 +78,7 @@ class GIGame : Game(){
 
         val fDef = FixtureDef()
         fDef.filter.categoryBits = WALL_BIT
-        fDef.filter.maskBits = PLAYER_BULLET_BIT or PLAYER_BIT
+        fDef.filter.maskBits = PLAYER_BULLET_BIT or PLAYER_BIT or ENEMY_BULLET_BIT
 
         val shape = PolygonShape()
         val vertices = arrayOf(
@@ -104,7 +104,7 @@ class GIGame : Game(){
         val topWall = world.createBody(bDef)
         topWall.createFixture(fDef)
 
-        bDef.position.set(V_WIDTH / 2, 0f)
+        bDef.position.set(V_WIDTH / 2, -10f)
         val bottomWall = world.createBody(bDef)
         bottomWall.createFixture(fDef)
     }
