@@ -60,6 +60,7 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
             game.playerController.handleInput()
             game.levelController.checkLevel()
         }
+        game.levelController.update(delta)
         game.player.update()
     }
 

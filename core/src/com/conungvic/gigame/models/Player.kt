@@ -71,6 +71,7 @@ class Player(game: GIGame): Destroyable {
     fun update() {
         if (GameModel.state == GameState.PLAYER_DIED) {
             body.setLinearVelocity(0f, 0f)
+            game.gameController.clearOrStopObjects()
             game.enemyController.clearBullets()
             game.playerController.clearBullets()
         }

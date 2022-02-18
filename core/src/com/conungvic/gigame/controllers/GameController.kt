@@ -62,14 +62,17 @@ class GameController(val game: GIGame) {
             game.playerController.bullets.forEach { it.body.setLinearVelocity(0f, 0f) }
             game.enemyController.bullets.forEach { it.body.setLinearVelocity(0f, 0f) }
             bonuses.forEach { it.body.setLinearVelocity(0f, 0f) }
-        } else {
+            game.enemies.forEach { it.body.setLinearVelocity(0f, 0f) }
+            val snd = game.assetManager.get(PAUSE, Sound::class.java)
+            snd.play()
+        } else if (GameModel.state == GameState.PAUSED) {
             GameModel.state = GameState.PLAYING
             game.playerController.bullets.forEach { it.body.setLinearVelocity(0f, 220f) }
             game.enemyController.bullets.forEach { it.body.setLinearVelocity(0f, -220f) }
             bonuses.forEach { it.body.setLinearVelocity(0f, -170f) }
+            val snd = game.assetManager.get(PAUSE, Sound::class.java)
+            snd.play()
         }
-        val snd = game.assetManager.get(PAUSE, Sound::class.java)
-        snd.play()
     }
 
     fun spawnBonus(x: Float, y: Float) {

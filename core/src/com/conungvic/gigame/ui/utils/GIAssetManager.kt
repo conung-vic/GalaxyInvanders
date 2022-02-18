@@ -15,6 +15,7 @@ const val THEME_02 = "$AUDIO/$MUSIC/theme_02.mp3"
 
 const val ALIEN_HIT    = "$AUDIO/$SOUNDS/alien_hit.wav"
 const val ALIEN_SHOOT  = "$AUDIO/$SOUNDS/alien_shoot.wav"
+const val ALIEN_FLY    = "$AUDIO/$SOUNDS/alien_fly.wav"
 const val BONUS        = "$AUDIO/$SOUNDS/bonus.wav"
 const val EXPLOSION_1  = "$AUDIO/$SOUNDS/explosion_01.wav"
 const val EXPLOSION_2  = "$AUDIO/$SOUNDS/explosion_02.wav"
@@ -35,6 +36,7 @@ class GIAssetManager : AssetManager() {
     fun loadSoundFx() {
         this.load(ALIEN_HIT, Sound::class.java)
         this.load(ALIEN_SHOOT, Sound::class.java)
+        this.load(ALIEN_FLY, Sound::class.java)
         this.load(BONUS, Sound::class.java)
         this.load(EXPLOSION_1, Sound::class.java)
         this.load(EXPLOSION_2, Sound::class.java)

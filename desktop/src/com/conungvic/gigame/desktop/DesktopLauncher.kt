@@ -15,6 +15,6 @@ fun main(args: Array<String>) {
     config.foregroundFPS = 120
     config.backgroundFPS = 120
     config.resizable = true
-    config.fullscreen = true
+//    config.fullscreen = true
     LwjglApplication(GIGame(), config)
 }

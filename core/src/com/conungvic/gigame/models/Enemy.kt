@@ -11,6 +11,13 @@ import com.conungvic.gigame.PLAYER_BULLET_BIT
 import com.conungvic.gigame.controllers.enemyBodyVertices
 import kotlin.experimental.or
 
+enum class EnemyState {
+    FLYING_LEFT,
+    FLYING_RIGHT,
+    FLYING_TO_PLAYER,
+    STAND
+}
+
 class Enemy(
     private val game: GIGame,
     x: Float,
@@ -29,6 +36,7 @@ class Enemy(
     val body: Body
     var health: Int
     val maxHealth: Int
+    var state: EnemyState = EnemyState.STAND
 
     init {
         val enemyFixtureDef = FixtureDef()
@@ -37,7 +45,7 @@ class Enemy(
         enemyFixtureDef.filter.maskBits = PLAYER_BIT or PLAYER_BULLET_BIT
 
         val bDef = BodyDef()
-        bDef.type = BodyDef.BodyType.StaticBody
+        bDef.type = BodyDef.BodyType.DynamicBody
         bDef.position.set(x, y)
         body = game.world.createBody(bDef)
 
@@ -49,6 +57,16 @@ class Enemy(
 
         maxHealth = 100 + (GameModel.currentLevel - 1) * 10 + level * 5
         health = maxHealth
+    }
+
+    fun correctFlight() {
+        val vx = 50f
+        val vy = -70f
+        if (body.position.x < game.player.body.position.x) {
+            body.setLinearVelocity(vx, vy)
+        } else {
+            body.setLinearVelocity(-vx, vy)
+        }
     }
 
     override fun destroy() {
