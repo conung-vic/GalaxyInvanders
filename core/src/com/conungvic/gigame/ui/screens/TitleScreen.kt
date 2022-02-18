@@ -27,7 +27,7 @@ class TitleScreen(game: GIGame) : CommonScreen(game) {
     }
 
     override fun show() {
-        Gdx.app.log("TitleScreen:show","Not yet implemented")
+//        Gdx.app?.log("TitleScreen:show","Not yet implemented")
     }
 
     private fun handleInput(delta: Float) {
@@ -36,7 +36,6 @@ class TitleScreen(game: GIGame) : CommonScreen(game) {
             Gdx.input.isKeyJustPressed(Input.Keys.SPACE) ||
             Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
         ) {
-            Gdx.app.log("TitleScreen", "New Game")
             this.game.screen = GameScreen(this.game)
             dispose()
         }
@@ -59,14 +58,14 @@ class TitleScreen(game: GIGame) : CommonScreen(game) {
     }
 
     override fun pause() {
-//        Gdx.app.log("TitleScreen:pause","Not yet implemented")
+//        Gdx.app?.log("TitleScreen:pause","Not yet implemented")
     }
 
     override fun resume() {
-//        Gdx.app.log("TitleScreen:resume","Not yet implemented")
+//        Gdx.app?.log("TitleScreen:resume","Not yet implemented")
     }
 
     override fun hide() {
-//        Gdx.app.log("TitleScreen:hide","Not yet implemented")
+//        Gdx.app?.log("TitleScreen:hide","Not yet implemented")
     }
 }

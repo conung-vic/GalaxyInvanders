@@ -13,6 +13,7 @@ class WorldCollisionController(
 ) : ContactListener {
 
     override fun beginContact(contact: Contact?) {
+        Gdx.app.log("WorldCollisionController", "beginContact:start")
         val fixA: Fixture? = contact?.fixtureA
         val fixB: Fixture? = contact?.fixtureB
 
@@ -77,6 +78,7 @@ class WorldCollisionController(
                 Gdx.app.log("WorldCollisionController", "Unknown collision")
             }
         }
+        Gdx.app.log("WorldCollisionController", "beginContact:end")
     }
 
     private fun markBulletForDestroy(fix: Fixture?) {
@@ -85,15 +87,15 @@ class WorldCollisionController(
     }
 
     override fun endContact(contact: Contact?) {
-//        Gdx.app.log("WorldContactListener:endContact", s)
+        Gdx.app.log("WorldContactListener", "endContact")
     }
 
     override fun preSolve(contact: Contact?, oldManifold: Manifold?) {
-//        Gdx.app.log("WorldContactListener:preSolve", s)
+        Gdx.app.log("WorldContactListener", "preSolve")
     }
 
     override fun postSolve(contact: Contact?, impulse: ContactImpulse?) {
-//        Gdx.app.log("WorldContactListener:postSolve", s)
+        Gdx.app.log("WorldContactListener", "postSolve")
     }
 
 

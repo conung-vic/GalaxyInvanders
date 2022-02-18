@@ -114,7 +114,7 @@ class LevelController(val game: GIGame) {
 
     private fun moveFleet() {
         processMovementVector()
-        val timeUntilFlights = 45 + GameModel.currentLevel * 5
+        val timeUntilFlights = 25 + GameModel.currentLevel * 5
 
         if (GameModel.fleetStateTime >= timeUntilFlights) {
             val x = (GameModel.fleetStateTime - timeUntilFlights).toInt() / 10 // every 10 sec after timeUntilFlights

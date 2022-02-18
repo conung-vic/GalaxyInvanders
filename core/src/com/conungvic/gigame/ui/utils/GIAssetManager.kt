@@ -1,6 +1,5 @@
 package com.conungvic.gigame.ui.utils
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
@@ -55,17 +54,14 @@ class GIAssetManager : AssetManager() {
         val res = super.update()
         if(isFinished && assetsLoading) {
             assetsLoading = false
-            Gdx.app.log("GIAssetManager", "update: assets loaded")
             val theme1 = this.get(THEME_01, Music::class.java)
             theme1.setOnCompletionListener {
-                Gdx.app.log("GIAssetManager", "switch theme from 01 to 02")
                 val theme = this.get(THEME_02, Music::class.java)
                 theme.play()
             }
 
             val theme2 = this.get(THEME_02, Music::class.java)
             theme2.setOnCompletionListener {
-                Gdx.app.log("GIAssetManager", "switch theme from 02 to 01")
                 val theme = this.get(THEME_01, Music::class.java)
                 theme.play()
             }

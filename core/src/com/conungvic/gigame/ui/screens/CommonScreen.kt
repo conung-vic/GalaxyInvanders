@@ -36,7 +36,9 @@ abstract class CommonScreen(game: GIGame) : Screen {
 
         val fps = Gdx.graphics.framesPerSecond
         val timeStep = if (fps > 60) 1f / fps else 1 / 60f
+        Gdx.app.log("CommonScreen", "before world update: fps: $fps; ts: $timeStep")
         this.game.world.step(timeStep, 6, 2)
+        Gdx.app.log("CommonScreen", "after world update: fps: $fps; ts: $timeStep")
 
         val backName = BACKGROUND_TEMPLATE.format(backNum)
         if (this.game.assetManager.isLoaded(backName))
