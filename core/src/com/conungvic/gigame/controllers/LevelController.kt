@@ -114,10 +114,10 @@ class LevelController(val game: GIGame) {
 
     private fun moveFleet() {
         processMovementVector()
-        val timeUntilFlights = 5 + GameModel.currentLevel * 5
+        val timeUntilFlights = 45 + GameModel.currentLevel * 5
 
         if (GameModel.fleetStateTime >= timeUntilFlights) {
-            val x = (GameModel.fleetStateTime - timeUntilFlights).toInt() / 5 // every 5 sec after timeUntilFlights
+            val x = (GameModel.fleetStateTime - timeUntilFlights).toInt() / 10 // every 10 sec after timeUntilFlights
             if (x > GameModel.flyngEnemies ) {
                 GameModel.flyngEnemies = x
                 startEnemy()
@@ -138,7 +138,7 @@ class LevelController(val game: GIGame) {
         newEnemy.state = enemy.state
         newEnemy.health = enemy.health
         game.enemies.add(newEnemy)
-        enemy.destroy()
+        enemy.setWaitForDestroy(true)
     }
 
     fun checkLevel() {

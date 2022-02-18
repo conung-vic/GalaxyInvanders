@@ -65,6 +65,14 @@ class WorldCollisionController(
                 }
                 game.player.hit()
             }
+            ENEMY_BIT or PLAYER_BIT -> {
+                if (cDefA == ENEMY_BIT) {
+                    game.enemyController.explode((fixA?.userData as Enemy))
+                } else {
+                    game.enemyController.explode((fixB?.userData as Enemy))
+                }
+                game.player.hit()
+            }
             else -> {
                 Gdx.app.log("WorldCollisionController", "Unknown collision")
             }
