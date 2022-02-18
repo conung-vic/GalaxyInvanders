@@ -14,5 +14,7 @@ fun main(args: Array<String>) {
     config.vSyncEnabled = false
     config.foregroundFPS = 120
     config.backgroundFPS = 120
+    config.resizable = true
+    config.fullscreen = true
     LwjglApplication(GIGame(), config)
 }

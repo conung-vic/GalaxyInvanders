@@ -19,7 +19,7 @@ class Player(game: GIGame): Destroyable {
     override fun isWaitForDestroy(): Boolean = waitForDestroy
 
     var life: Int = 3
-    var weaponLevel: Int = 33
+    var weaponLevel: Int = 1
     var weaponPower: Int = 1
     var weaponSpeed: Float = 1.0f
 
@@ -63,7 +63,7 @@ class Player(game: GIGame): Destroyable {
         life--
         val snd = game.assetManager.get(EXPLOSION_1, Sound::class.java)
         snd.play()
-        weaponLevel = 1
+        weaponLevel = GameModel.currentLevel
         weaponPower = 1
         weaponSpeed = 1.0f
     }

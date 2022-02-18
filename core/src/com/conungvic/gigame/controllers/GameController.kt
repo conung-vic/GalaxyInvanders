@@ -77,11 +77,13 @@ class GameController(val game: GIGame) {
     }
 
     private fun realSpawnBonus(x: Float, y: Float) {
-        when (MathUtils.random(1000)) {
-            in   0.. 20 -> bonuses.add(LifeBonus(game, x, y))
-            in  21.. 70 -> bonuses.add(WeaponLevelBonus(game, x, y))
-            in  71..150 -> bonuses.add(WeaponPowerBonus(game, x, y))
-            in 150..300 -> bonuses.add(WeaponSpeedBonus(game, x, y))
+        if (MathUtils.random(1000) <= 300) {
+            when (MathUtils.random(100)) {
+                in 0..25 -> bonuses.add(LifeBonus(game, x, y))
+                in 26..50 -> bonuses.add(WeaponLevelBonus(game, x, y))
+                in 51..75 -> bonuses.add(WeaponPowerBonus(game, x, y))
+                in 76..100 -> bonuses.add(WeaponSpeedBonus(game, x, y))
+            }
         }
     }
 
