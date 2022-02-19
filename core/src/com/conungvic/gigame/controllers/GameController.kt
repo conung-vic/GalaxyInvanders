@@ -3,6 +3,7 @@ package com.conungvic.gigame.controllers
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.math.MathUtils
 import com.conungvic.gigame.GIGame
+import com.conungvic.gigame.V_HEIGHT
 import com.conungvic.gigame.models.*
 import com.conungvic.gigame.ui.utils.BONUS
 import com.conungvic.gigame.ui.utils.PAUSE
@@ -12,6 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue
 class GameController(val game: GIGame) {
     val bonuses: MutableList<Bonus> = mutableListOf()
     private val bonusesToCreate: Queue<Pair<Float, Float>> = LinkedBlockingQueue()
+    private var gotHundredBonus: Boolean = false
 
     fun update(delta: Float) {
         GameModel.stateTime += delta
@@ -30,15 +32,34 @@ class GameController(val game: GIGame) {
                     GameModel.state = if (game.player.life == 0) GameState.END_GAME else GameState.STARTING
                 }
             }
+            GameState.PLAYING -> {
+                game.playerController.bullets
+                    .filter { it.body.position.y >= V_HEIGHT - 40 }
+                    .forEach { it.setWaitForDestroy(true) }
+                game.enemyController.bullets
+                    .filter { it.body.position.y <= 10f }
+                    .forEach { it.setWaitForDestroy(true) }
+                bonuses
+                    .filter { it.body.position.y >= V_HEIGHT - 40 }
+                    .forEach { it.setWaitForDestroy(true) }
+            }
             else -> {
 //                Gdx.app.log()
             }
         }
 
-        if (GameModel.killed > 0 && GameModel.killed % 100 == 0) {
+        if (GameModel.killed > 0 &&
+            GameModel.killed % 100 == 0 &&
+            !gotHundredBonus) {
             val snd = game.assetManager.get(BONUS, Sound::class.java)
             snd.play()
             game.player.life++
+            gotHundredBonus = true
+        }
+
+        if (GameModel.killed > 0 &&
+            GameModel.killed % 100 != 0) {
+            gotHundredBonus = false
         }
 
         val it = bonuses.iterator()

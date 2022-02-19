@@ -58,6 +58,8 @@ class LevelController(val game: GIGame) {
     }
 
     fun update(delta: Float) {
+        checkLevel()
+
         GameModel.fleetStateTime += delta
         if (GameModel.state == GameState.PLAYING) {
             if (GameModel.fleetStateTime > 5f && GameModel.fleetState == EnemyState.STAND) {
@@ -72,12 +74,12 @@ class LevelController(val game: GIGame) {
     private fun getMostLeftX(): Float = game.enemies
         .filter { it.state != EnemyState.FLYING_TO_PLAYER }
         .map { it.body.position.x }
-        .min() ?: 10f
+        .minOrNull() ?: 10f
 
     private fun getMostRightX(): Float = game.enemies
         .filter { it.state != EnemyState.FLYING_TO_PLAYER }
         .map { it.body.position.x }
-        .max() ?: V_WIDTH
+        .maxOrNull() ?: V_WIDTH
 
     private fun processMovementVector() {
         val mostLeftEnemyX = getMostLeftX()
@@ -141,11 +143,13 @@ class LevelController(val game: GIGame) {
         enemy.setWaitForDestroy(true)
     }
 
-    fun checkLevel() {
-        if (game.enemies.isEmpty()) {
-            game.gameController.clearOrStopObjects()
-            GameModel.currentLevel += 1
-            createLevel()
+    private fun checkLevel() {
+        if (GameModel.state == GameState.PLAYING) {
+            if (game.enemies.isEmpty()) {
+                game.gameController.clearOrStopObjects()
+                GameModel.currentLevel += 1
+                createLevel()
+            }
         }
     }
 

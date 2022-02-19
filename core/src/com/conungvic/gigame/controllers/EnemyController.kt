@@ -4,10 +4,7 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.conungvic.gigame.GIGame
-import com.conungvic.gigame.models.Bullet
-import com.conungvic.gigame.models.BulletOwner
-import com.conungvic.gigame.models.Enemy
-import com.conungvic.gigame.models.GameModel
+import com.conungvic.gigame.models.*
 import com.conungvic.gigame.ui.utils.ALIEN_HIT
 import com.conungvic.gigame.ui.utils.ALIEN_SHOOT
 import com.conungvic.gigame.ui.utils.EXPLOSION_2
@@ -106,7 +103,7 @@ class EnemyController(
         }
     }
 
-    fun clearBullets() {
+    private fun clearBullets() {
         val bulletIt = bullets.iterator()
         while (bulletIt.hasNext()) {
             val bullet = bulletIt.next()
@@ -117,7 +114,7 @@ class EnemyController(
         }
     }
 
-    fun processObjects() {
+    private fun clearEnemies() {
         val it = game.enemies.iterator()
         while (it.hasNext()) {
             val enemy = it.next()
@@ -126,14 +123,18 @@ class EnemyController(
                 enemy.destroy()
             }
         }
+    }
 
+    fun update() {
+        clearEnemies()
         clearBullets()
-
-        game.enemies.forEach {
-            if (
-                bullets.size < GameModel.currentLevel * 3 + 1 &&
-                MathUtils.random(500) < 1
-            ) shoot(it)
+        if (GameModel.state == GameState.PLAYING) {
+            game.enemies.forEach {
+                if (
+                    bullets.size < GameModel.currentLevel * 3 + 1 &&
+                    MathUtils.random(500) < 1
+                ) shoot(it)
+            }
         }
     }
 

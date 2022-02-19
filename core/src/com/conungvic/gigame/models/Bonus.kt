@@ -26,7 +26,7 @@ abstract class Bonus(val game: GIGame, x: Float, y: Float) : Destroyable {
 
     init {
         bonusFixDef.filter.categoryBits = BONUS_BIT
-        bonusFixDef.filter.maskBits = WALL_BIT or PLAYER_BIT
+        bonusFixDef.filter.maskBits = PLAYER_BIT
         val bonusShape = CircleShape()
         bonusShape.radius = 10f
         bonusFixDef.shape = bonusShape

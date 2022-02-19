@@ -27,7 +27,7 @@ class Bullet(
     init {
         val bulletFixDef = FixtureDef()
         bulletFixDef.filter.categoryBits = if (owner == BulletOwner.PLAYER) PLAYER_BULLET_BIT else ENEMY_BULLET_BIT
-        bulletFixDef.filter.maskBits = WALL_BIT or (if (owner == BulletOwner.PLAYER) ENEMY_BIT else PLAYER_BIT)
+        bulletFixDef.filter.maskBits = if (owner == BulletOwner.PLAYER) ENEMY_BIT else PLAYER_BIT
         val bulletShape = PolygonShape()
         val vertices = arrayOf(
             Vector2(-1f, 2f),

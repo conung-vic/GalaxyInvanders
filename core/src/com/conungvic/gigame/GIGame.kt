@@ -11,10 +11,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape
 import com.badlogic.gdx.physics.box2d.World
 import com.conungvic.gigame.controllers.*
 import com.conungvic.gigame.models.Enemy
+import com.conungvic.gigame.models.GameModel
 import com.conungvic.gigame.models.Player
 import com.conungvic.gigame.ui.screens.TitleScreen
 import com.conungvic.gigame.ui.utils.GIAssetManager
-import kotlin.experimental.or
 
 const val V_WIDTH = 900f
 const val V_HEIGHT = 600f
@@ -78,7 +78,7 @@ class GIGame : Game(){
 
         val fDef = FixtureDef()
         fDef.filter.categoryBits = WALL_BIT
-        fDef.filter.maskBits = PLAYER_BULLET_BIT or PLAYER_BIT or ENEMY_BULLET_BIT
+        fDef.filter.maskBits = PLAYER_BIT
 
         val shape = PolygonShape()
         val vertices = arrayOf(
@@ -91,22 +91,6 @@ class GIGame : Game(){
         fDef.shape = shape
         leftWall.createFixture(fDef)
         rightWall.createFixture(fDef)
-
-        bDef.position.set(V_WIDTH / 2, V_HEIGHT - 60)
-        val topVertices = arrayOf(
-            Vector2(-V_WIDTH / 2 + 10f, 10f),
-            Vector2(-V_WIDTH / 2 + 10f, -10f),
-            Vector2(V_WIDTH / 2 - 10f, -10f),
-            Vector2(V_WIDTH / 2 - 10f, 10f)
-        )
-        shape.set(topVertices)
-        fDef.shape = shape
-        val topWall = world.createBody(bDef)
-        topWall.createFixture(fDef)
-
-        bDef.position.set(V_WIDTH / 2, -10f)
-        val bottomWall = world.createBody(bDef)
-        bottomWall.createFixture(fDef)
     }
 
     override fun dispose() {

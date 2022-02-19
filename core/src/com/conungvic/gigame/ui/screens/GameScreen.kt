@@ -54,14 +54,10 @@ class GameScreen(game: GIGame) : CommonScreen(game) {
             game.gameController.togglePause()
         }
 
-        if (GameModel.state == GameState.PLAYING) {
-            game.playerController.processObjects()
-            game.enemyController.processObjects()
-            game.playerController.handleInput()
-            game.levelController.checkLevel()
-        }
+        game.playerController.update()
+        game.enemyController.update()
+        game.playerController.handleInput()
         game.levelController.update(delta)
-        game.player.update()
     }
 
     override fun render(delta: Float) {

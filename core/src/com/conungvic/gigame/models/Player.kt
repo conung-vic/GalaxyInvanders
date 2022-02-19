@@ -49,34 +49,6 @@ class Player(game: GIGame): Destroyable {
         body.createFixture(fDef).userData = this
     }
 
-    fun hit() {
-        for (bullet in game.playerController.bullets) {
-            bullet.setWaitForDestroy(true)
-        }
-        for (bullet in game.enemyController.bullets) {
-            bullet.setWaitForDestroy(true)
-        }
-        game.gameController.bonuses.forEach { it.body.setLinearVelocity(0f, 0f) }
-        body.setLinearVelocity(0f, 0f)
-        GameModel.state = GameState.PLAYER_DIED
-        GameModel.stateTime = 0f
-        life--
-        val snd = game.assetManager.get(EXPLOSION_1, Sound::class.java)
-        snd.play()
-        weaponLevel = GameModel.currentLevel
-        weaponPower = 1
-        weaponSpeed = 1.0f
-    }
-
-    fun update() {
-        if (GameModel.state == GameState.PLAYER_DIED) {
-            body.setLinearVelocity(0f, 0f)
-            game.gameController.clearOrStopObjects()
-            game.enemyController.clearBullets()
-            game.playerController.clearBullets()
-        }
-    }
-
     override fun destroy() {
         game.world.destroyBody(body)
     }

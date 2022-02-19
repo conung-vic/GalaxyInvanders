@@ -1,6 +1,5 @@
 package com.conungvic.gigame.controllers
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.physics.box2d.*
 import com.conungvic.gigame.*
 import com.conungvic.gigame.models.Bonus
@@ -13,7 +12,6 @@ class WorldCollisionController(
 ) : ContactListener {
 
     override fun beginContact(contact: Contact?) {
-        Gdx.app.log("WorldCollisionController", "beginContact:start")
         val fixA: Fixture? = contact?.fixtureA
         val fixB: Fixture? = contact?.fixtureB
 
@@ -21,12 +19,6 @@ class WorldCollisionController(
         val cDefB: Short = fixB?.filterData?.categoryBits ?: 0
 
         when (cDefA or cDefB) {
-            WALL_BIT or PLAYER_BULLET_BIT -> {
-                if (cDefA == PLAYER_BULLET_BIT )
-                    markBulletForDestroy(fixA)
-                else
-                    markBulletForDestroy(fixB)
-            }
             PLAYER_BULLET_BIT or ENEMY_BIT -> {
                 if (cDefA == PLAYER_BULLET_BIT) {
                     game.enemyController.hit((fixB?.userData as Enemy), (fixA?.userData as Bullet))
@@ -45,26 +37,8 @@ class WorldCollisionController(
                     (fixA.userData as Bonus).setWaitForDestroy(true)
                 }
             }
-            BONUS_BIT or WALL_BIT -> {
-                if (cDefA == BONUS_BIT) {
-                    (fixA?.userData as Bonus).setWaitForDestroy(true)
-                } else {
-                    (fixB?.userData as Bonus).setWaitForDestroy(true)
-                }
-            }
-            ENEMY_BULLET_BIT or WALL_BIT -> {
-                if (cDefA == ENEMY_BULLET_BIT )
-                    markBulletForDestroy(fixA)
-                else
-                    markBulletForDestroy(fixB)
-            }
             ENEMY_BULLET_BIT or PLAYER_BIT -> {
-                if (cDefA == ENEMY_BULLET_BIT) {
-                    markBulletForDestroy(fixA)
-                } else {
-                    markBulletForDestroy(fixB)
-                }
-                game.player.hit()
+                game.playerController.hitPlayer()
             }
             ENEMY_BIT or PLAYER_BIT -> {
                 if (cDefA == ENEMY_BIT) {
@@ -72,13 +46,12 @@ class WorldCollisionController(
                 } else {
                     game.enemyController.explode((fixB?.userData as Enemy))
                 }
-                game.player.hit()
+                game.playerController.hitPlayer()
             }
             else -> {
-                Gdx.app.log("WorldCollisionController", "Unknown collision")
+//                Gdx.app.log("WorldCollisionController", "Unknown collision")
             }
         }
-        Gdx.app.log("WorldCollisionController", "beginContact:end")
     }
 
     private fun markBulletForDestroy(fix: Fixture?) {
@@ -87,16 +60,14 @@ class WorldCollisionController(
     }
 
     override fun endContact(contact: Contact?) {
-        Gdx.app.log("WorldContactListener", "endContact")
+//        Gdx.app.log("WorldCollisionController", "endContact:start")
     }
 
     override fun preSolve(contact: Contact?, oldManifold: Manifold?) {
-        Gdx.app.log("WorldContactListener", "preSolve")
+//        Gdx.app.log("WorldCollisionController", "preSolve:start")
     }
 
     override fun postSolve(contact: Contact?, impulse: ContactImpulse?) {
-        Gdx.app.log("WorldContactListener", "postSolve")
+//        Gdx.app.log("WorldCollisionController", "postSolve:start")
     }
-
-
 }
