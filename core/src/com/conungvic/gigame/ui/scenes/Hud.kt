@@ -142,9 +142,6 @@ class Hud(game: GIGame): Disposable {
         } else if (GameModel.state == GameState.PAUSED) {
             readyGoLabel.isVisible = true
             readyGoLabel.setText("P A U S E")
-        } else if (GameModel.state == GameState.END_GAME) {
-            readyGoLabel.isVisible = true
-            readyGoLabel.setText("T H E    E N D")
         } else {
             readyGoLabel.isVisible = false
         }

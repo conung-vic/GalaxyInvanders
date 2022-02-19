@@ -1,7 +1,5 @@
 package com.conungvic.gigame.models
 
-import com.badlogic.gdx.physics.box2d.World
-
 enum class GameState {
     STARTING, PLAYING, PAUSED, PLAYER_DIED, END_GAME
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.conungvic.gigame.GIGame
 import com.conungvic.gigame.V_HEIGHT
 import com.conungvic.gigame.models.*
+import com.conungvic.gigame.ui.screens.EndGameScreen
 import com.conungvic.gigame.ui.utils.BONUS
 import com.conungvic.gigame.ui.utils.PAUSE
 import java.util.*
@@ -42,6 +43,10 @@ class GameController(val game: GIGame) {
                 bonuses
                     .filter { it.body.position.y >= V_HEIGHT - 40 }
                     .forEach { it.setWaitForDestroy(true) }
+            }
+            GameState.END_GAME -> {
+//                game.screen.dispose()
+                game.screen = EndGameScreen(game)
             }
             else -> {
 //                Gdx.app.log()
@@ -84,6 +89,7 @@ class GameController(val game: GIGame) {
             game.enemyController.bullets.forEach { it.body.setLinearVelocity(0f, 0f) }
             bonuses.forEach { it.body.setLinearVelocity(0f, 0f) }
             game.enemies.forEach { it.body.setLinearVelocity(0f, 0f) }
+            game.player.body.setLinearVelocity(0f, 0f)
             val snd = game.assetManager.get(PAUSE, Sound::class.java)
             snd.play()
         } else if (GameModel.state == GameState.PAUSED) {

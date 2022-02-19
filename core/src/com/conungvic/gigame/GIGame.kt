@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape
 import com.badlogic.gdx.physics.box2d.World
 import com.conungvic.gigame.controllers.*
 import com.conungvic.gigame.models.Enemy
-import com.conungvic.gigame.models.GameModel
 import com.conungvic.gigame.models.Player
 import com.conungvic.gigame.ui.screens.TitleScreen
 import com.conungvic.gigame.ui.utils.GIAssetManager
@@ -62,6 +61,8 @@ class GIGame : Game(){
         assetManager.loadSoundFx()
 
         setScreen(TitleScreen(this))
+//        GameModel.state = GameState.END_GAME
+//        setScreen(EndGameScreen(this))
 
         defineWalls()
     }

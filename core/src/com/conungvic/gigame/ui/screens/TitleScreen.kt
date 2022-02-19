@@ -48,7 +48,6 @@ class TitleScreen(game: GIGame) : CommonScreen(game) {
 
     override fun render(delta: Float) {
         super.render(delta)
-
         stage.act()
         stage.draw()
     }
